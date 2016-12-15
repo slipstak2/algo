@@ -19,5 +19,20 @@ int main() {
 #endif
 	std::ios::sync_with_stdio(false);
 
+	int n, val;
+	cin >> n;
+	const int CNT = 100 + 1;
+	vi a(CNT);
+	for (int i = 0; i < n; ++i) {
+		cin >> val;
+		a[val]++;
+	}
+
+	int res = 0;
+	for (int i = 1; i < CNT; ++i) {
+		int cur = a[i] + a[i - 1];
+		res = max(res, cur);
+	}
+	cout << res;
 	return 0;
 }

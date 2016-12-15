@@ -19,5 +19,21 @@ int main() {
 #endif
 	std::ios::sync_with_stdio(false);
 
+	const int LETTERS_CNT = 26;
+	vi h(LETTERS_CNT);
+	for (int i = 0; i < LETTERS_CNT; ++i){
+		cin >> h[i];
+	}
+
+	string word;
+	cin >> word;
+
+	int maxH = h[word[0] - 'a'];
+	for (char c : word) {
+		maxH = max(maxH, h[c - 'a']);
+	}
+
+	cout << word.size() * maxH;
+	
 	return 0;
 }
