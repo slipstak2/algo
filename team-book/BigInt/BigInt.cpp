@@ -342,8 +342,41 @@ int main() {
 
 	ios_base::sync_with_stdio(false);
 
-	BigInt a, b;
-	cin >> a >> b;
-	cout << a + b;
+	BigInt A("9998989000000000000898989");
+	BigInt B("12345670123456789890");
+	int n = 999999999;
+
+	cout << "A + B = " << A + B <<endl;
+	cout << "A + n = " << A + n <<endl;
+
+	cout << "A - B = " << A - B <<endl;
+	cout << "A - n = " << A - n <<endl;
+
+	cout << "A * B = " << A * B <<endl;
+	cout << "A * n = " << A * n <<endl;
+
+	cout << "A / B = " << A / B <<endl;
+	cout << "A / n = " << A / n <<endl;
+
+	cout << "A % B = " << A % B <<endl;
+	cout << "A % n = " << A % n <<endl;
+
+
+	assert(A + B == BigInt("9999001345670123457688879"));
+	assert(A + n == BigInt("9998989000000001000898988"));
+	
+	assert(A - B == BigInt("9998976654329876544109099"));
+	assert(A - n == BigInt("9998988999999999000898990"));
+	
+	assert(A * B == BigInt("123444219762073084096519831638616296086421210"));
+	assert(A * n == BigInt("9998988990001011000898988999101011"));
+
+	assert(A / B == BigInt("809918"));
+	assert(A / n == BigInt("9998989009998989"));
+
+	assert(A % B == BigInt("8544950123646769969"));
+	assert(A % n == 10897978);
+
+
 	return 0;
 }
