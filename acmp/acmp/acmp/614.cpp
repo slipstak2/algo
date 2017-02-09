@@ -1,3 +1,4 @@
+// https://www.quora.com/profile/Michal-Fori%C5%A1ek/Posts/Solution-for-Brackets-Subsequences
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <map>
