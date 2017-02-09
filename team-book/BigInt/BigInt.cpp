@@ -65,9 +65,6 @@ struct BigInt {
 	int operator [] (int i) const {
 		return i < size() ? digits[i] : 0;
 	}
-	/*int & operator [] (int i) {
-		return digits[i];
-	}*/
 	BigInt & norm() {
 		while (size() > 1 && !digits.back()) {
 			digits.pop_back();
@@ -92,8 +89,7 @@ private:
 	friend istream & operator >> (istream & in, BigInt & bi);
 };
 
-istream & operator >> (istream & in, BigInt & bi)
-{
+istream & operator >> (istream & in, BigInt & bi) {
 	string buf;
 	in >> buf;
 	bi.init(buf);
@@ -177,7 +173,6 @@ BigInt & operator += (BigInt & a, T b) {
 	return BigInt::plus(a, b);
 }
 
-
 BigInt & BigInt::minus(BigInt & a, int b) {
 	vi & res = a.digits;
 	int carry = b;
@@ -226,8 +221,7 @@ BigInt & BigInt::mul(BigInt & a, int b) {
 	}
 	return a.fixCarry(carry).norm();
 }
-
-BigInt BigInt::mul(const BigInt & a, const BigInt & b) {
+BigInt   BigInt::mul(const BigInt & a, const BigInt & b) {
 	BigInt c;
 	vi & res = c.digits;
 	res.resize(a.size() + b.size());
@@ -242,7 +236,6 @@ BigInt BigInt::mul(const BigInt & a, const BigInt & b) {
 	return c.norm();
 }
 
-
 template<class T>
 BigInt operator * (const BigInt & a, T b) {
 	BigInt res = a;
@@ -252,6 +245,13 @@ BigInt operator * (const BigInt & a, T b) {
 template<class T>
 BigInt operator *= (BigInt & a, T b) {
 	return BigInt::mul(a, b);
+}
+
+void operator <<= (BigInt & a, const int k) {
+	for (int i = 0; i < k; ++i) {
+		a.digits.insert(a.digits.begin(), 0);
+	}
+	a.norm(); // 0 << 1 = 0;
 }
 
 BigInt & BigInt::divmod(BigInt & a, int b, int & mod) {
@@ -264,15 +264,7 @@ BigInt & BigInt::divmod(BigInt & a, int b, int & mod) {
 	}
 	return a.norm();
 }
-
-void operator <<= (BigInt & a, const int k) {
-	for (int i = 0; i < k; ++i) {
-		a.digits.insert(a.digits.begin(), 0);
-	}
-	a.norm(); // 0 << 1 = 0;
-}
-
-BigInt BigInt::divmod(const BigInt & a, const BigInt & b, BigInt & mod) {
+BigInt   BigInt::divmod(const BigInt & a, const BigInt & b, BigInt & mod) {
 	BigInt res;
 	vi & div = res.digits;
 	div.resize(a.size());
@@ -305,18 +297,16 @@ BigInt & BigInt::div(BigInt & a, int b) {
 	int mod;
 	return divmod(a, b, mod);
 }
-
-BigInt BigInt::div(const BigInt & a, const BigInt & b) {
+BigInt   BigInt::div(const BigInt & a, const BigInt & b) {
 	BigInt mod;
 	return divmod(a, b, mod);
 }
 
-int BigInt::mod(BigInt & a, int b) {
+int    BigInt::mod(BigInt & a, int b) {
 	int res;
 	divmod(a, b, res);
 	return res;
 }
-
 BigInt BigInt::mod(const BigInt & a, const BigInt & b) {
 	BigInt res;
 	divmod(a, b, res);
@@ -345,6 +335,7 @@ template<class T>
 int operator %= (BigInt & a, T b) {
 	return BigInt::mod(a, b);
 }
+
 int main() {
 #ifdef _DEBUG
 	freopen("input.txt", "r", stdin);
@@ -357,5 +348,4 @@ int main() {
 	cin >> a >> b;
 	cout << a % b;
 	return 0;
-
 }
