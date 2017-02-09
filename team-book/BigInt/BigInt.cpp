@@ -25,7 +25,7 @@ public:
 	static const int value = 1;
 };
 
-struct BigInt {
+struct BigInt: vi {
 	
 	const static int  DIGIT_WIDTH = 9; // 10-base digits count in BigInt digit (DIGIT_WIDTH must be in [1..9])
 	const static int  BASE = Power<10, DIGIT_WIDTH>::value;
@@ -45,44 +45,42 @@ struct BigInt {
 	static int      mod    (      BigInt & a,       int      b);
 	static BigInt   mod    (const BigInt & a, const BigInt & b);
 
-	vi digits;
+	//vi digits;
 	BigInt() {}
 	BigInt(int num) {
 		while (num) {
-			digits.push_back(num % BASE);
+			push_back(num % BASE);
 			num /= BASE;
 		}
 	}
-	BigInt(const vi & v) {
-		digits = v;
-	}
+	BigInt(const vi & v): vi(v) {}
 	BigInt(const string & buf) {
 		init(buf);
 	}
-	int size() const {
-		return digits.size();
+	int operator [] (size_t i) const {
+		return i < size() ? vi::operator[](i) : 0;
 	}
-	int operator [] (int i) const {
-		return i < size() ? digits[i] : 0;
+	int & operator [] (size_t i) {
+		return vi::operator[](i);
 	}
 	BigInt & norm() {
-		while (size() > 1 && !digits.back()) {
-			digits.pop_back();
+		while (size() > 1 && !back()) {
+			pop_back();
 		}
 		return *this;
 	}
 	BigInt & fixCarry(int carry) {
 		if (carry) {
-			digits.push_back(carry);
+			push_back(carry);
 		}
 		return *this;
 	}
 private:
 	void init(const string & buf) {
-		digits.resize((buf.size() - 1) / DIGIT_WIDTH + 1);
+		resize((buf.size() - 1) / DIGIT_WIDTH + 1);
 		for (int i = buf.size() - 1, pos = 0; i >= 0; i -= DIGIT_WIDTH, ++pos) {
 			int start = max(0, i - DIGIT_WIDTH + 1);
-			digits[pos] = atoi(buf.substr(start, i - start + 1).c_str());
+			vi::operator[](pos) = atoi(buf.substr(start, i - start + 1).c_str());
 		}
 
 	}
@@ -96,9 +94,9 @@ istream & operator >> (istream & in, BigInt & bi) {
 	return in;
 }
 ostream & operator << (ostream & out, const BigInt & bi) {
-	out << (bi.digits.empty() ? 0 : bi.digits.back());
+	out << (bi.empty() ? 0 : bi.back());
 	for (int i = bi.size() - 2; i >= 0; --i) {
-		out << setw(BigInt::DIGIT_WIDTH) << setfill('0') << bi.digits[i];
+		out << setw(BigInt::DIGIT_WIDTH) << setfill('0') << bi[i];
 	}
 	return out;
 }
@@ -136,9 +134,9 @@ bool operator != (const BigInt & a, const BigInt & b) {
 }
 
 BigInt & BigInt::plus(BigInt & a, int b) {
-	vi & res = a.digits;
+	BigInt & res = a;
 	int carry = b;
-	for (int pos = 0; pos < a.size() && carry; ++pos) {
+	for (size_t pos = 0; pos < a.size() && carry; ++pos) {
 		res[pos] += carry;
 		if (res[pos] >= BigInt::BASE) {
 			res[pos] -= BigInt::BASE;
@@ -151,10 +149,10 @@ BigInt & BigInt::plus(BigInt & a, int b) {
 	return a.fixCarry(carry);
 }
 BigInt & BigInt::plus(BigInt & a, const BigInt & b) {
-	vi & res = a.digits;
+	BigInt & res = a;
 	res.resize(max(a.size(), b.size()));
 	int carry = 0;
-	for (int i = 0; i < a.size(); ++i) {
+	for (size_t i = 0; i < a.size(); ++i) {
 		res[i] = a[i] + b[i] + carry;
 		carry = res[i] / BigInt::BASE;
 		res[i] -= carry * BigInt::BASE;
@@ -174,9 +172,9 @@ BigInt & operator += (BigInt & a, T b) {
 }
 
 BigInt & BigInt::minus(BigInt & a, int b) {
-	vi & res = a.digits;
+	BigInt & res = a;
 	int carry = b;
-	for (int pos = 0; pos < a.size() && carry; ++pos) {
+	for (size_t pos = 0; pos < a.size() && carry; ++pos) {
 		res[pos] -= carry;
 		if (res[pos] < 0) {
 			res[pos] += BigInt::BASE;
@@ -189,8 +187,8 @@ BigInt & BigInt::minus(BigInt & a, int b) {
 	return a.norm();
 }
 BigInt & BigInt::minus(BigInt & a, const BigInt & b) {
-	vi & res = a.digits;
-	for (int i = 0; i < a.size(); ++i) {
+	BigInt & res = a;
+	for (size_t i = 0; i < a.size(); ++i) {
 		res[i] -= b[i];
 		if (res[i] < 0) {
 			res[i] += BigInt::BASE;
@@ -212,9 +210,9 @@ BigInt & operator -= (BigInt & a, T b) {
 }
 
 BigInt & BigInt::mul(BigInt & a, int b) {
-	vi & res = a.digits;
+	BigInt & res = a;
 	int carry = 0;
-	for (int i = 0; i < a.size(); ++i) {
+	for (size_t i = 0; i < a.size(); ++i) {
 		ll tmp = (ll)res[i] * b + carry;
 		carry = (int)(tmp / BigInt::BASE);
 		res[i] = (int)(tmp - carry * BigInt::BASE);
@@ -223,11 +221,11 @@ BigInt & BigInt::mul(BigInt & a, int b) {
 }
 BigInt   BigInt::mul(const BigInt & a, const BigInt & b) {
 	BigInt c;
-	vi & res = c.digits;
+	BigInt & res = c;
 	res.resize(a.size() + b.size());
 	int carry = 0;
-	for (int i = 0; i < a.size(); ++i) {
-		for (int j = 0; j < b.size() || carry; ++j) {
+	for (size_t i = 0; i < a.size(); ++i) {
+		for (size_t j = 0; j < b.size() || carry; ++j) {
 			ll tmp = res[i + j] + (ll)a[i] * b[j] + carry;
 			carry = int(tmp / BigInt::BASE);
 			res[i + j] = int(tmp - (ll)carry * BigInt::BASE);
@@ -249,13 +247,13 @@ BigInt operator *= (BigInt & a, T b) {
 
 void operator <<= (BigInt & a, const int k) {
 	for (int i = 0; i < k; ++i) {
-		a.digits.insert(a.digits.begin(), 0);
+		a.insert(a.begin(), 0);
 	}
 	a.norm(); // 0 << 1 = 0;
 }
 
 BigInt & BigInt::divmod(BigInt & a, int b, int & mod) {
-	vi & res = a.digits;
+	BigInt & res = a;
 	mod = 0;
 	for (int i = a.size() - 1; i >= 0; --i) {
 		ll tmp = (ll)mod * BigInt::BASE + res[i];
@@ -266,13 +264,13 @@ BigInt & BigInt::divmod(BigInt & a, int b, int & mod) {
 }
 BigInt   BigInt::divmod(const BigInt & a, const BigInt & b, BigInt & mod) {
 	BigInt res;
-	vi & div = res.digits;
+	BigInt & div = res;
 	div.resize(a.size());
 
 	assert(mod == 0);
 	for (int i = a.size() - 1; i >= 0; --i) {
 		mod <<= 1;
-		mod.digits[0] = a[i];
+		mod[0] = a[i];
 
 		BigInt Num;
 		int l = 0, r = BigInt::BASE - 1, Dig;
@@ -346,6 +344,6 @@ int main() {
 
 	BigInt a, b;
 	cin >> a >> b;
-	cout << a % b;
+	cout << a + b;
 	return 0;
 }
