@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <map>
+#include <stack>
 #include <string>
 #include <vector>
 #include <iostream>
