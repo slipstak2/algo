@@ -12,3 +12,5 @@
 *.filters
 *.vcxproj
 *.sln
+input.txt
+output.txt
