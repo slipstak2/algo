@@ -14,3 +14,5 @@
 *.sln
 input.txt
 output.txt
+*.iobj
+*.ipdb
