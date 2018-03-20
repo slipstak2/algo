@@ -16,3 +16,4 @@ input.txt
 output.txt
 *.iobj
 *.ipdb
+*.enc
