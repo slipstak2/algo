@@ -6,52 +6,39 @@
 
 using namespace std;
 
-
 vector<string> A;
 
-void genA(int n) {
-   // An=sin(1–sin(2+sin(3–sin(4+...sin(n))...) 
-   A[1] = "sin(1";
-   char tail[100];
-   for (int i = 2; i <= n; ++i) {
-      sprintf(tail, "sin(%d", i);
-      A[i] = A[i - 1] + (i % 2 ? "+" : "-") + tail;
+void outputAn(int n, int k=1) {
+   if (k > n) {
+      return;
    }
-   for (int i = 1; i <= n; ++i) {
-      A[i] += string(i, ')');
+   if (k != 1) {
+      printf("%c", k % 2 ? '+' : '-');
    }
+   printf("sin(%d", k);
+   outputAn(n, k + 1);
+   printf(")");
 }
 
-void outputSn(int n, int tail) {
+void printSn(int n, int tail = 1) {
    if (n != 1) {
-      cout << '(';
-      outputSn(n - 1, tail + 1);
-      cout << ')';
+      printf("(");
+      printSn(n - 1, tail + 1);
+      printf(")");
    }
-   cout << A[n] << '+' << tail;
+   outputAn(n);
+   printf("+%d", tail);
 }
-void genSn(int n) {
-   // Sn=(...(A1+n)A2+n-1)A3+...+2)An+1 
-   char tail[100];
-   string Sn;
-   for (int i = 1; i <= n; ++i) {
-      sprintf(tail, "+%d", n + 1 - i);
-      Sn = "(" + Sn + A[i] + tail + ")";
-   }
-   Sn.resize(Sn.size() - 1);
-   cout << Sn.c_str() + 1;
-}
+
 int main() {
 #ifdef _DEBUG
    freopen("input.txt", "r", stdin);
    freopen("output.txt", "w", stdout);
 #endif
+   ios::sync_with_stdio(false);
    int n;
-   cin >> n;
-   A.resize(n + 1);
-   genA(n);
-   //genSn(n);
-   outputSn(n, 1);
+   scanf("%d", &n);
+   printSn(n);
 
    return 0;
 }
