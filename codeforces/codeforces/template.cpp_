@@ -9,10 +9,6 @@
 
 using namespace std;
 
-typedef long long ll;
-typedef vector<ll> vll;
-typedef vector<vll> vvll;
-
 #define For(i, st, en) for(int i=(st); i<=(int)(en); i++)
 #define forn(i, n) for(int i=0; i<(int)(n); i++)
 #define all(x) (x).begin(), (x).end()
