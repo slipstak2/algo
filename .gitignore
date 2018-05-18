@@ -17,3 +17,7 @@ output.txt
 *.iobj
 *.ipdb
 *.enc
+*.ipch
+*.user
+*.db-shm
+*.db-wal
