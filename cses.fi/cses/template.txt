@@ -1,0 +1,19 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+typedef long long ll;
+typedef vector<int> vi;
+
+int main() {
+#ifdef _DEBUG
+   freopen("input.txt", "r", stdin);
+   freopen("output.txt", "w", stdout);
+#endif
+
+   ios::sync_with_stdio(0);
+
+   return 0;
+}
