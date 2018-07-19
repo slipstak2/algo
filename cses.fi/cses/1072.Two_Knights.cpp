@@ -50,15 +50,30 @@ ll solve(ll n)  {
 	return cnt;
 }
 
+ll ans[7] = {-1, 0, 6, 28, 96, 252, 550};
+
 int main() {
-//#ifdef _DEBUG
+#ifdef _DEBUG
 	freopen("input.txt", "r", stdin);
 	freopen("output.txt", "w", stdout);
-//#endif
+#endif
 	ios::sync_with_stdio(0);
 
 	ll n;
 	cin >> n;
-	cout << solve(10000) << '\n';
+
+	ll prv = -1, cur = -1;
+	for (ll i = 1; i <= n; ++i) {
+		if (i <= 6) {
+			cur = ans[i];
+		} else {
+			cur = prv + (2*i-1)*(i-1)*(i-1)-24-8*(i-5)+(2*i-1)*(2*i-2)/2;
+		}
+		cout << cur << '\n';
+		prv = cur;
+	}
+
+	
+
 	return 0;
 }
