@@ -9,9 +9,6 @@
 *.pdb
 *.log
 *.opendb
-*.filters
-*.vcxproj
-*.sln
 input.txt
 output.txt
 *.iobj
@@ -21,3 +18,15 @@ output.txt
 *.user
 *.db-shm
 *.db-wal
+/codeforces/*/*.filters
+/codeforces/*/*.vcxproj
+/codeforces/*.sln
+/contester.tsure.ru/*/*.filters
+/contester.tsure.ru/*/*.vcxproj
+/contester.tsure.ru/*.sln
+/cses.fi/*/*.filters
+/cses.fi/*/*.vcxproj
+/cses.fi/*.sln
+/shen/2. Порождение комбинаторных объектов/2.1. Размещение с повторениями/2.1.Размещения с повторениями.filters
+/shen/2. Порождение комбинаторных объектов/2.1. Размещение с повторениями/2.1.Размещения с повторениями.vcxproj
+/shen/*.sln
