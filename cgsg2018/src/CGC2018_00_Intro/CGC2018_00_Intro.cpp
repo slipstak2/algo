@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
    glutInit(&argc, argv);
    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
    glutInitWindowSize(800, 600);
-   glutCreateWindow("CGC2018_00_Intro");
+   glutCreateWindow(PROJECT_NAME);
    glutDisplayFunc(Display);
 
 

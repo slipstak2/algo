@@ -1,21 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <IntDir>$(Root)\build\int\$(Platform)\$(Configuration)</IntDir>
-    <OutDir>$(Root)\build\$(Platform)\$(Configuration)</OutDir>
+    <IntDir>$(Root)\build\int\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(Root)\build\$(Platform)\$(Configuration)\</OutDir>
     <DstDir>$(Root)\bin\$(Platform)\$(Configuration)\</DstDir>
     <TargetName>$(ProjectName)-$(Platform)-$(Configuration)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <PostBuildEvent>
       <Command Condition="'$(Platform)'=='Win32'">
-         xcopy /Y $(OutDir)*.exe                                  $(DstDir)*.exe         /E /I /F &amp;
-         xcopy /Y $(Root)\3rd_part\freeglut\bin\freeglut.dll      $(DstDir)freeglut.dll* /E /I /F
-      </Command>
-      <Command Condition="'$(Platform)'=='x64'">
-         xcopy /Y $(OutDir)*.exe                                  $(DstDir)*.exe         /E /I /F &amp;
-         xcopy /Y $(Root)\3rd_part\freeglut\bin\x64\freeglut.dll  $(DstDir)freeglut.dll* /E /I /F
+         xcopy /Y $(OutDir)*.exe                                  $(DstDir)*.exe         /I /F &amp;
+         xcopy /Y $(Root)\3rd_part\freeglut\bin\freeglut.dll      $(DstDir)freeglut.dll* /I /F
+      </Command>                                                                         
+      <Command Condition="'$(Platform)'=='x64'">                                         
+         xcopy /Y $(OutDir)*.exe                                  $(DstDir)*.exe         /I /F &amp;
+         xcopy /Y $(Root)\3rd_part\freeglut\bin\x64\freeglut.dll  $(DstDir)freeglut.dll* /I /F
       </Command>
     </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>PROJECT_NAME="$(TargetName)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
   </ItemDefinitionGroup>
 </Project>
