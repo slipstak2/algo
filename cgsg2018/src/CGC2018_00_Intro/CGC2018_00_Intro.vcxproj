@@ -28,6 +28,7 @@
   <ImportGroup Label="PropertySheets">
     <Import Project="root.props" />
     <Import Project="..\..\props\freeglut.props" />
+    <Import Project="..\..\props\project.props" />
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
