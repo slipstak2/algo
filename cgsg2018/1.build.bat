@@ -1,0 +1,1 @@
+"%VS140COMNTOOLS%..\IDE\devenv" src/cgsg2018.sln /Rebuild "Release|x64" /Project src/CGC2018_00_Intro/CGC2018_00_Intro.vcxproj
