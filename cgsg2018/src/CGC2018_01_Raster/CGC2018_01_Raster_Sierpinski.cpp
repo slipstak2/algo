@@ -18,7 +18,7 @@ public:
 void myInit() {
    glClearColor(1.0, 1.0, 1.0, 1.0);      // background color = white
    glColor3f(1.0, 0.0, 0.0);              // drawing color    = red
-   glPointSize(4);                        // point size       = 4
+   glPointSize(1);                        // point size       = 4
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
    gluOrtho2D(0, 800, 0, 600);
@@ -42,8 +42,7 @@ void Sierpinski(void)
    GLintPoint T[3] = {{0,0},{600,0},{300,600}};
 
    int index = rand() % 3;
-   //GLintPoint point = T[index];
-   GLintPoint point = {0, 300};
+   GLintPoint point = T[index];
    int data;
    for (int i = 0; i < 100000; i++)
    {
