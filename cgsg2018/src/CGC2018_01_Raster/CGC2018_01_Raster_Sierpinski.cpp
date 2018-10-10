@@ -44,7 +44,7 @@ void Sierpinski(void)
    int index = rand() % 3;
    GLintPoint point = T[index];
    int data;
-   for (int i = 0; i < 100000; i++)
+   for (int i = 0; i < 1000000; i++)
    {
       index = rand() % 3;
       point.x = (point.x + T[index].x) / 2;
