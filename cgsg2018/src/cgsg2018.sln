@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CGC2018_00_Intro", "CGC2018
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CGC2018_01_Raster", "CGC2018_01_Raster\CGC2018_01_Raster.vcxproj", "{8E3DA154-75B7-4364-87D5-2401C7F4932C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "utils", "utils\utils.vcxproj", "{AFCE3D16-6D2B-4005-8C8F-3BEB7FB11D2D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -31,6 +33,14 @@ Global
 		{8E3DA154-75B7-4364-87D5-2401C7F4932C}.Release|Win32.Build.0 = Release|Win32
 		{8E3DA154-75B7-4364-87D5-2401C7F4932C}.Release|x64.ActiveCfg = Release|x64
 		{8E3DA154-75B7-4364-87D5-2401C7F4932C}.Release|x64.Build.0 = Release|x64
+		{AFCE3D16-6D2B-4005-8C8F-3BEB7FB11D2D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AFCE3D16-6D2B-4005-8C8F-3BEB7FB11D2D}.Debug|Win32.Build.0 = Debug|Win32
+		{AFCE3D16-6D2B-4005-8C8F-3BEB7FB11D2D}.Debug|x64.ActiveCfg = Debug|x64
+		{AFCE3D16-6D2B-4005-8C8F-3BEB7FB11D2D}.Debug|x64.Build.0 = Debug|x64
+		{AFCE3D16-6D2B-4005-8C8F-3BEB7FB11D2D}.Release|Win32.ActiveCfg = Release|Win32
+		{AFCE3D16-6D2B-4005-8C8F-3BEB7FB11D2D}.Release|Win32.Build.0 = Release|Win32
+		{AFCE3D16-6D2B-4005-8C8F-3BEB7FB11D2D}.Release|x64.ActiveCfg = Release|x64
+		{AFCE3D16-6D2B-4005-8C8F-3BEB7FB11D2D}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
