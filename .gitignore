@@ -15,7 +15,6 @@ output.txt
 *.ipdb
 *.enc
 *.ipch
-*.user
 *.db-shm
 *.db-wal
 /codeforces/*/*.filters

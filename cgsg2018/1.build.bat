@@ -1,1 +1,0 @@
-"%VS140COMNTOOLS%..\IDE\devenv" src/cgsg2018.sln /Rebuild "Release|x64" /Project src/CGC2018_01_Raster/CGC2018_01_Raster.vcxproj
