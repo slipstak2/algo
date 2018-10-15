@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CGC2018_00_Intro", "CGC2018_00_Intro\CGC2018_00_Intro.vcxproj", "{8E3DA154-75B7-4364-87D5-2401C7F4932B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CGC2018_01_Raster", "CGC2018_01_Raster\CGC2018_01_Raster.vcxproj", "{8E3DA154-75B7-4364-87D5-2401C7F4932C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CGC2018_01_Raster-01_Bresenham_line", "CGC2018_01_Raster-01_Bresenham_line\CGC2018_01_Raster-01_Bresenham_line.vcxproj", "{8E3DA154-75B7-4364-87D5-2401C7F4932C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "utils", "utils\utils.vcxproj", "{AFCE3D16-6D2B-4005-8C8F-3BEB7FB11D2D}"
 EndProject

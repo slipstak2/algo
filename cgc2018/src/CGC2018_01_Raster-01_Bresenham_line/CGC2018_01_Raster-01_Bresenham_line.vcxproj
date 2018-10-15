@@ -82,6 +82,9 @@
       <Project>{afce3d16-6d2b-4005-8c8f-3beb7fb11d2d}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CGC2018_01_Raster-01_Bresenham_line.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

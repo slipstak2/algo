@@ -12,6 +12,12 @@ float buffer[H][W];
 
 class GLintPoint {
 public:
+   GLintPoint(GLint x, GLint y) 
+      : x(x)
+      , y(y)
+   {}
+
+public:
    GLint x, y;
 };
 
@@ -37,6 +43,19 @@ void drawDot(GLint x, GLint y) {
       glVertex2i(x, y);
    glEnd();
 }
+
+void drawLine(GLintPoint p1, GLintPoint p2) {
+   GLint x = p1.x, y = p2.y;
+
+   float slope = ((float)p2.y - p1.y) / ((float)p2.x - p1.x);
+   GLint deltaX = p2.x > p1.x ? 1 : -1;
+   while (x <= p2.x) {
+      drawDot(x, y);
+      y += slope;
+      x += deltaX;
+   }
+}
+
 void Sierpinski(void)
 {
    GLintPoint T[3] = {{0,0},{600,0},{300,600}};
@@ -58,9 +77,8 @@ void Sierpinski(void)
 void myDisplay(void) {
    glClear(GL_COLOR_BUFFER_BIT);
 
-   glBegin(GL_POINTS);
-   Sierpinski();
-   glEnd();
+   //Sierpinski();
+   GLintPoint center(400, 300);
 
    glFlush();
 }
