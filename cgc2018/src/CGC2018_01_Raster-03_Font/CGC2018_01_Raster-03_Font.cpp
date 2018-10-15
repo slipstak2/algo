@@ -58,7 +58,7 @@ void drawString(const string &s, fonts::Fnt_Ptr fnt, GLint x, GLint y) {
    unsigned short w = fnt->characterWidth();
 
    for (size_t i = 0; i < s.size(); ++i) {
-      drawCharacter(s[i], fnt, x + i * w, y);
+      drawCharacter(s[i], fnt, x + (GLint)i * w, y);
    }
 }
 
