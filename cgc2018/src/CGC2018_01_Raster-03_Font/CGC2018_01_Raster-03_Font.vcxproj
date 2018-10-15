@@ -23,7 +23,7 @@
     <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
     <PlatformToolset>v140</PlatformToolset>
     <ConfigurationType>Application</ConfigurationType>
-    <ProjectGuid>{8E3DA154-75B7-4364-87D5-2401C7F4932C}</ProjectGuid>
+    <ProjectGuid>{8E3DA154-75B7-4364-87D5-2401C7F4932D}</ProjectGuid>
     <RootNamespace>cgsg2018-console</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -77,6 +77,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="CGC2018_01_Raster-03_Font.cpp" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\utils\utils.vcxproj">
       <Project>{afce3d16-6d2b-4005-8c8f-3beb7fb11d2d}</Project>

@@ -1,8 +1,3 @@
-// http://www.undocprint.org/formats/font_formats#fon_files
-// http://justsolve.archiveteam.org/wiki/FNT_(Windows_Font)
-// http://www.os2museum.com/files/docs/win10sdk/windows-1.03-sdk-prgref-1986.pdf
-
-// https://github.com/bson/enetcore/tree/9f8055bdb7a5d013e9e3905983db6c358d6bbc25/hardware/font maybe bad format
 #define _CRT_SECURE_NO_WARNINGS
 
 #include "GL/freeglut.h"
@@ -47,7 +42,7 @@ void myReshape(int width, int height) {
 
 void drawDot(GLint x, GLint y) {
    glBegin(GL_POINTS);
-   glVertex2i(x, y);
+      glVertex2i(x, y);
    glEnd();
 }
 

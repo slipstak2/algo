@@ -1,3 +1,7 @@
+// http://www.undocprint.org/formats/font_formats#microsoft_windows_r_font_formats
+// http://justsolve.archiveteam.org/wiki/FNT_(Windows_Font)
+// http://www.os2museum.com/files/docs/win10sdk/windows-1.03-sdk-prgref-1986.pdf
+
 #include <memory>
 #include <functional>
 
