@@ -30,21 +30,25 @@ public:
       : x(x)
       , y(y)
    {}
+   GLVector(int x, int y) 
+      : x((GLfloat)x)
+      , y((GLfloat)y)
+   {}
    void turn(float alpha) {
-      float nextX = x * cos(alpha) - y * sin(alpha);
-      float nextY = x * sin(alpha) + y * cos(alpha);
+      GLfloat nextX = x * cos(alpha) - y * sin(alpha);
+      GLfloat nextY = x * sin(alpha) + y * cos(alpha);
       x = nextX;
       y = nextY;
    }
 
 public:
-   float x, y;
+   GLfloat x, y;
 };
 
 void myInit() {
    glClearColor(1.0, 1.0, 1.0, 1.0);      // background color = white
    glColor3f(1.0, 0.0, 0.0);              // drawing color    = red
-   glPointSize(ZOOM);                        // point size       = 4
+   glPointSize((GLfloat)ZOOM);            // point size       = 4
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
 
@@ -96,6 +100,68 @@ void drawSegmentNative(GLintPoint p1, GLintPoint p2) {
    }
 }
 
+void drawSegmentFloatByX(GLintPoint p1, GLintPoint p2);
+void drawSegmentFloatByY(GLintPoint p1, GLintPoint p2);
+
+void drawSegmentFloatByX(GLintPoint p1, GLintPoint p2) {
+   int deltaX = abs(p2.x - p1.x);
+   int deltaY = abs(p2.y - p1.y);
+   float err = 0;
+   float deltaerr = (float)deltaY / (float)deltaX;
+   if (deltaerr <= 1) {
+      int x = p1.x, y = p1.y;
+      int dirX = p2.x - p1.x > 0 ? 1 : -1;
+      int dirY = p2.y - p1.y > 0 ? 1 : -1;
+      while (x != p2.x) {
+         drawDot(x, y);
+         err += deltaerr;
+         if (err >= 0.5) {
+            y += dirY;
+            err -= 1.0;
+         }
+         x += dirX;
+      }
+   } else {
+      drawSegmentFloatByY(p1, p2);
+   }
+}
+
+void drawSegmentFloatByY(GLintPoint p1, GLintPoint p2) {
+   int deltaX = abs(p2.x - p1.x);
+   int deltaY = abs(p2.y - p1.y);
+   float err = 0;
+   float deltaerr = (float)deltaX / (float)deltaY;
+   if (deltaerr <= 1) {
+      int x = p1.x, y = p1.y;
+      int dirX = p2.x - p1.x > 0 ? 1 : -1;
+      int dirY = p2.y - p1.y > 0 ? 1 : -1;
+      while(y != p2.y) {
+         drawDot(x, y);
+         err += deltaerr;
+         if (err >= 0.5) {
+            x += dirX;
+            err -= 1.0;
+         }
+         y += dirY;
+      }
+   } else {
+      drawSegmentFloatByX(p1, p2);
+   }
+}
+
+void drawSegmentFloat(GLintPoint p1, GLintPoint p2) {
+   int deltaX = abs(p2.x - p1.x);
+   int deltaY = abs(p2.y - p1.y);
+
+   if (deltaX == 0) {
+      drawSegmentFloatByY(p1, p2);
+   } else if (deltaY == 0) {
+      drawSegmentFloatByX(p1, p2);
+   } else {
+      drawSegmentFloatByX(p1, p2);
+   }
+}
+
 void drawSegmets(GLintPoint center, GLint R) {
    GLVector end(0, -R + 10);
    GLVector beg(0, -R / 10);
@@ -103,11 +169,13 @@ void drawSegmets(GLintPoint center, GLint R) {
    const float pi = 2 * acos(0.f);
    float alpha = 2 * pi / PARTS;
 
+   drawSegmentFloat(GLintPoint(50, 50), GLintPoint(70, 50));
 
    for (int i = 0; i < PARTS; ++i) {
-      drawSegmentNative(
-         GLintPoint(center.x + beg.x, center.y + beg.y),
-         GLintPoint(center.x + end.x, center.y + end.y)
+      //drawSegmentNative(
+      drawSegmentFloat(
+         GLintPoint(center.x + (GLint)beg.x, center.y + (GLint)beg.y),
+         GLintPoint(center.x + (GLint)end.x, center.y + (GLint)end.y)
       );
       beg.turn(alpha);
       end.turn(alpha);
@@ -133,15 +201,16 @@ int main(int argc, char* argv[]) {
    glutInit(&argc, argv);
    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
    glutInitWindowSize(800, 600);
-   glutInitWindowPosition(100, 150);
+   glutInitWindowPosition(300, 300);
    glutCreateWindow(PROJECT_NAME);
+
+   myInit();
 
    glutDisplayFunc(myDisplay);
    glutMouseFunc(myMouse);
    glutKeyboardFunc(myKeyBoard);
    glutReshapeFunc(myReshape);
 
-   myInit();
    glutMainLoop();
    return 0;
 }
