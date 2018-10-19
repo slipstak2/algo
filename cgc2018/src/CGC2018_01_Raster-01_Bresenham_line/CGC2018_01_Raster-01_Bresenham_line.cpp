@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <functional>
 
 using namespace std;
 
@@ -75,105 +76,54 @@ void drawDot(GLint x, GLint y) {
    glEnd();
 }
 
-void drawSegmentNative(GLintPoint p1, GLintPoint p2) {
-   if (p1.x != p2.x) {
-      GLint x = p1.x;
-      float y = (float)p1.y;
+void drawSegmentBresenham(GLintPoint p1, GLintPoint p2, std::function<void(GLint, GLint)> draw) {
+   int dx = p2.x - p1.x;
+   int dy = p2.y - p1.y;
 
-      float slope = ((float)p2.y - p1.y) / abs((float)p2.x - p1.x);
-      GLint deltaX = p2.x > p1.x ? 1 : -1;
-      while (x != p2.x) {
-         drawDot(x, (GLint)y);
-         y += slope;
-         x += deltaX;
-      }
-   } else if (p1.y != p2.y) {
-      float x = (float)p1.x;
-      GLint y = p1.y;
-      float slope = ((float)p2.x - p1.x) / abs((float)p2.y - p1.y);
-      GLint deltaY = p2.y > p1.y ? 1 : -1;
-      while (y != p2.y) {
-         drawDot((GLint)x, y);
-         y += deltaY;
-         x += slope;
-      }
-   }
-}
+   int e = 2 * abs(dy) - abs(dx);
+   int incrE  = 2 * abs(dy);
+   int incrNE = 2 * abs(dy) - 2 * abs(dx);
 
-void drawSegmentFloatByX(GLintPoint p1, GLintPoint p2);
-void drawSegmentFloatByY(GLintPoint p1, GLintPoint p2);
-
-void drawSegmentFloatByX(GLintPoint p1, GLintPoint p2) {
-   int deltaX = abs(p2.x - p1.x);
-   int deltaY = abs(p2.y - p1.y);
-   float err = 0;
-   float deltaerr = (float)deltaY / (float)deltaX;
-   if (deltaerr <= 1) {
-      int x = p1.x, y = p1.y;
-      int dirX = p2.x - p1.x > 0 ? 1 : -1;
-      int dirY = p2.y - p1.y > 0 ? 1 : -1;
-      while (x != p2.x) {
-         drawDot(x, y);
-         err += deltaerr;
-         if (err >= 0.5) {
-            y += dirY;
-            err -= 1.0;
-         }
-         x += dirX;
-      }
-   } else {
-      drawSegmentFloatByY(p1, p2);
-   }
-}
-
-void drawSegmentFloatByY(GLintPoint p1, GLintPoint p2) {
-   int deltaX = abs(p2.x - p1.x);
-   int deltaY = abs(p2.y - p1.y);
-   float err = 0;
-   float deltaerr = (float)deltaX / (float)deltaY;
-   if (deltaerr <= 1) {
-      int x = p1.x, y = p1.y;
-      int dirX = p2.x - p1.x > 0 ? 1 : -1;
-      int dirY = p2.y - p1.y > 0 ? 1 : -1;
-      while(y != p2.y) {
-         drawDot(x, y);
-         err += deltaerr;
-         if (err >= 0.5) {
-            x += dirX;
-            err -= 1.0;
-         }
+   int x = p1.x, y = p1.y;
+   int dirX = p2.x - p1.x > 0 ? 1 : -1;
+   int dirY = p2.y - p1.y > 0 ? 1 : -1;
+   draw(x, y);
+   while (x != p2.x) {
+      if (e > 0) {
          y += dirY;
+         e += incrNE;
       }
-   } else {
-      drawSegmentFloatByX(p1, p2);
+      else {
+         e += incrE;
+      }
+      x += dirX;
+      draw(x, y);
    }
 }
 
-void drawSegmentFloat(GLintPoint p1, GLintPoint p2) {
-   int deltaX = abs(p2.x - p1.x);
-   int deltaY = abs(p2.y - p1.y);
-
-   if (deltaX == 0) {
-      drawSegmentFloatByY(p1, p2);
-   } else if (deltaY == 0) {
-      drawSegmentFloatByX(p1, p2);
+void drawSegmentBresenham(GLintPoint p1, GLintPoint p2) {
+   int dx = p2.x - p1.x;
+   int dy = p2.y - p1.y;
+   if (abs(dy) <= abs(dx)) {
+      drawSegmentBresenham(p1, p2, [](GLint x, GLint y) {
+         drawDot(x, y);
+      });
    } else {
-      drawSegmentFloatByX(p1, p2);
+      drawSegmentBresenham(GLintPoint(p1.y, p1.x), GLintPoint(p2.y, p2.x), [](GLint x, GLint y) {
+         drawDot(y, x);
+      });
    }
 }
 
 void drawSegmets(GLintPoint center, GLint R) {
    GLVector end(0, -R + 10);
-   GLVector beg(0, -R / 10);
-   const int PARTS = 24;
+   GLVector beg(0, -R / 8);
+   const int PARTS = 48;
    const float pi = 2 * acos(0.f);
    float alpha = 2 * pi / PARTS;
 
-   drawSegmentFloat(GLintPoint(50, 50), GLintPoint(70, 50));
-
    for (int i = 0; i < PARTS; ++i) {
-      //drawSegmentNative(
-      drawSegmentFloat(
+      drawSegmentBresenham(
          GLintPoint(center.x + (GLint)beg.x, center.y + (GLint)beg.y),
          GLintPoint(center.x + (GLint)end.x, center.y + (GLint)end.y)
       );
