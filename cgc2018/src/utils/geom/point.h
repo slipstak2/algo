@@ -12,3 +12,16 @@ public:
 public:
    GLint x, y;
 };
+
+
+class GLfloatPoint {
+public:
+   GLfloatPoint(GLfloat x, GLfloat y) 
+      : x(x)
+      , y(y)
+   {}
+
+public:
+   GLfloat x, y;
+};
+

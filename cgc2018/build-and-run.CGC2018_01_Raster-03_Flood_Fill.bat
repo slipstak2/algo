@@ -1,0 +1,2 @@
+"%VS140COMNTOOLS%..\IDE\devenv" src/cgc2018.sln /Rebuild "Release|x64" /Project src/CGC2018_01_Raster-03_Flood_Fill/CGC2018_01_Raster-03_Flood_Fill.vcxproj
+"bin/x64/Release/CGC2018_01_Raster-03_Flood_Fill-x64-Release.exe"

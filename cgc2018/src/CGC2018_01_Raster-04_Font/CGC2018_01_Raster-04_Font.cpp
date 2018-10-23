@@ -5,7 +5,9 @@
 
 #include <iostream>
 #include <string>
+
 #include "fonts/Fnt.h"
+#include "graphics/common.h"
 
 using namespace std;
 
@@ -38,12 +40,6 @@ void myMouse(int button, int state, int x, int y) {
 
 void myReshape(int width, int height) {
    printf("width = %d; height=%d\n", width, height);
-}
-
-void drawDot(GLint x, GLint y) {
-   glBegin(GL_POINTS);
-      glVertex2i(x, y);
-   glEnd();
 }
 
 void drawCharacter(unsigned char c, fonts::Fnt_Ptr fnt, GLint x, GLint y) {
