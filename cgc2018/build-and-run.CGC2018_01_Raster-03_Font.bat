@@ -1,2 +1,0 @@
-"%VS140COMNTOOLS%..\IDE\devenv" src/cgc2018.sln /Rebuild "Release|x64" /Project src/CGC2018_01_Raster-03_Font/CGC2018_01_Raster-03_Font.vcxproj
-"bin/x64/Release/CGC2018_01_Raster-03_Font-x64-Release.exe"
