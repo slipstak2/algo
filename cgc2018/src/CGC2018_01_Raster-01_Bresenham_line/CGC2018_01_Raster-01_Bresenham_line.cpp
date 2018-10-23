@@ -5,6 +5,10 @@
 #include <algorithm>
 #include <functional>
 
+#include "geom/point.h"
+#include "geom/line.h"
+#include "graphics/common.h"
+
 using namespace std;
 
 const int W = 800;
@@ -13,21 +17,9 @@ const int ZOOM = 2;
 
 float buffer[H][W];
 
-class GLintPoint {
-public:
-   GLintPoint(GLint x, GLint y) 
-      : x(x)
-      , y(y)
-   {}
-
-public:
-   GLint x, y;
-};
-
-
 class GLVector {
 public:
-   GLVector(float x, float y) 
+   GLVector(GLfloat x, GLfloat y) 
       : x(x)
       , y(y)
    {}
@@ -46,6 +38,7 @@ public:
    GLfloat x, y;
 };
 
+
 void myInit() {
    glClearColor(1.0, 1.0, 1.0, 1.0);      // background color = white
    glColor3f(1.0, 0.0, 0.0);              // drawing color    = red
@@ -62,58 +55,16 @@ void myInit() {
   
 }
 
+
 void myMouse(int button, int state, int x, int y) {
    printf("button = %d; button = %d, x = %d; y = %d\n", button, state, x, y);
 }
+
 
 void myReshape(int width, int height) {
    printf("width = %d; height=%d\n", width, height);
 }
 
-void drawDot(GLint x, GLint y) {
-   glBegin(GL_POINTS);
-      glVertex2i(x, y);
-   glEnd();
-}
-
-void drawSegmentBresenham(GLintPoint p1, GLintPoint p2, std::function<void(GLint, GLint)> draw) {
-   int dx = p2.x - p1.x;
-   int dy = p2.y - p1.y;
-
-   int e = 2 * abs(dy) - abs(dx);
-   int incrE  = 2 * abs(dy);
-   int incrNE = 2 * abs(dy) - 2 * abs(dx);
-
-   int x = p1.x, y = p1.y;
-   int dirX = p2.x - p1.x > 0 ? 1 : -1;
-   int dirY = p2.y - p1.y > 0 ? 1 : -1;
-   draw(x, y);
-   while (x != p2.x) {
-      if (e > 0) {
-         y += dirY;
-         e += incrNE;
-      }
-      else {
-         e += incrE;
-      }
-      x += dirX;
-      draw(x, y);
-   }
-}
-
-void drawSegmentBresenham(GLintPoint p1, GLintPoint p2) {
-   int dx = p2.x - p1.x;
-   int dy = p2.y - p1.y;
-   if (abs(dy) <= abs(dx)) {
-      drawSegmentBresenham(p1, p2, [](GLint x, GLint y) {
-         drawDot(x, y);
-      });
-   } else {
-      drawSegmentBresenham(GLintPoint(p1.y, p1.x), GLintPoint(p2.y, p2.x), [](GLint x, GLint y) {
-         drawDot(y, x);
-      });
-   }
-}
 
 void drawSegmets(GLintPoint center, GLint R) {
    GLVector end(0, -R + 10);
@@ -125,7 +76,8 @@ void drawSegmets(GLintPoint center, GLint R) {
    for (int i = 0; i < PARTS; ++i) {
       drawSegmentBresenham(
          GLintPoint(center.x + (GLint)beg.x, center.y + (GLint)beg.y),
-         GLintPoint(center.x + (GLint)end.x, center.y + (GLint)end.y)
+         GLintPoint(center.x + (GLint)end.x, center.y + (GLint)end.y),
+         drawDot
       );
       beg.turn(alpha);
       end.turn(alpha);
@@ -150,7 +102,7 @@ void myKeyBoard(unsigned char key, int x, int y) {
 int main(int argc, char* argv[]) {
    glutInit(&argc, argv);
    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-   glutInitWindowSize(800, 600);
+   glutInitWindowSize(W, H);
    glutInitWindowPosition(300, 300);
    glutCreateWindow(PROJECT_NAME);
 

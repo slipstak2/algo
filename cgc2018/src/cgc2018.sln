@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CGC2018_01_Raster-03_Font",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CGC2018_01_Raster-02_Bresenham_circle", "CGC2018_01_Raster-02_Bresenham_circle\CGC2018_01_Raster-02_Bresenham_circle.vcxproj", "{8E3DA154-75B7-4364-87D5-2401C7F4933C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CGC2018_01_Raster-03_Flood_Fill", "CGC2018_01_Raster-03_Flood_Fill\CGC2018_01_Raster-03_Flood_Fill.vcxproj", "{8E3DA154-75B7-4864-87D5-2401C7F4933D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -61,6 +63,14 @@ Global
 		{8E3DA154-75B7-4364-87D5-2401C7F4933C}.Release|Win32.Build.0 = Release|Win32
 		{8E3DA154-75B7-4364-87D5-2401C7F4933C}.Release|x64.ActiveCfg = Release|x64
 		{8E3DA154-75B7-4364-87D5-2401C7F4933C}.Release|x64.Build.0 = Release|x64
+		{8E3DA154-75B7-4864-87D5-2401C7F4933D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8E3DA154-75B7-4864-87D5-2401C7F4933D}.Debug|Win32.Build.0 = Debug|Win32
+		{8E3DA154-75B7-4864-87D5-2401C7F4933D}.Debug|x64.ActiveCfg = Debug|x64
+		{8E3DA154-75B7-4864-87D5-2401C7F4933D}.Debug|x64.Build.0 = Debug|x64
+		{8E3DA154-75B7-4864-87D5-2401C7F4933D}.Release|Win32.ActiveCfg = Release|Win32
+		{8E3DA154-75B7-4864-87D5-2401C7F4933D}.Release|Win32.Build.0 = Release|Win32
+		{8E3DA154-75B7-4864-87D5-2401C7F4933D}.Release|x64.ActiveCfg = Release|x64
+		{8E3DA154-75B7-4864-87D5-2401C7F4933D}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

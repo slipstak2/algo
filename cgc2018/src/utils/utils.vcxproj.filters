@@ -4,15 +4,42 @@
     <Filter Include="fonts">
       <UniqueIdentifier>{3a68f4f0-87ef-4603-919f-f876449c8117}</UniqueIdentifier>
     </Filter>
+    <Filter Include="geom">
+      <UniqueIdentifier>{94c57e06-fb54-4e88-9a19-e0d69e610142}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics">
+      <UniqueIdentifier>{d370718c-2130-4d75-83f5-131fc75a4e2b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="fonts\Fnt.cpp">
       <Filter>fonts</Filter>
     </ClCompile>
+    <ClCompile Include="geom\line.cpp">
+      <Filter>geom</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\common.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="geom\circle.cpp">
+      <Filter>geom</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fonts\Fnt.h">
       <Filter>fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="geom\point.h">
+      <Filter>geom</Filter>
+    </ClInclude>
+    <ClInclude Include="geom\line.h">
+      <Filter>geom</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\common.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="geom\circle.h">
+      <Filter>geom</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
