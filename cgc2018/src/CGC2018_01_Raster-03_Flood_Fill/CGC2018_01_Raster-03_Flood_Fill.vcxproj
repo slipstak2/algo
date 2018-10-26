@@ -86,7 +86,7 @@
     <ClCompile Include="CGC2018_01_Raster-03_Flood_Fill.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="input.txt" />
+    <Text Include="..\..\data\russia-min-polyline.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
