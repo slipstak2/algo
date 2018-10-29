@@ -5,8 +5,10 @@
 
 #include <iostream>
 #include <string>
+#include <map>
 
 #include "fonts/Fnt.h"
+#include "fonts/GSF.h"
 #include "graphics/common.h"
 
 using namespace std;
@@ -16,9 +18,21 @@ const int H = 600;
 
 float buffer[H][W];
 
-fonts::Fnt_Ptr fntConsolas = fonts::Fnt::LoadFromFile("fonts/Consolas-20.fnt");
-fonts::Fnt_Ptr fntFkp = fonts::Fnt::LoadFromFile("fonts/fkpmedium-16.fnt");
-fonts::Fnt_Ptr fntPixelCarnage = fonts::Fnt::LoadFromFile("fonts/PixelCarnageMonospace-12.fnt");
+fonts::MonoSpacedFont_Ptr fntConsolas = fonts::Fnt::LoadFromFile("fonts/Consolas-20.fnt");
+fonts::MonoSpacedFont_Ptr fntFkp = fonts::Fnt::LoadFromFile("fonts/fkpmedium-16.fnt");
+fonts::MonoSpacedFont_Ptr fntPixelCarnage = fonts::Fnt::LoadFromFile("fonts/PixelCarnageMonospace-12.fnt");
+
+fonts::MonoSpacedFont_Ptr gsf08x08 = fonts::GSF::LoadFromFile("fonts/fnt/VGA2.GSF");
+fonts::MonoSpacedFont_Ptr gsfANK8X16 = fonts::GSF::LoadFromFile("fonts/fnt/ANK8X16.GSF");
+
+
+map<fonts::MonoSpacedFont_Ptr, string> strings = {
+   {fntPixelCarnage, "The quick brown fox jumps over the lazy dog. 0123456789"},
+   {fntFkp,      "Jackdaws love my big sphinx of quartz. 0123456789"},
+   {fntConsolas, "The five boxing wizards jump quickly. 0123456789"},
+   {gsf08x08,    "How razorback-jumping frogs can level six piqued gymnasts!. 0123456789"},
+   {gsfANK8X16,  "Cozy sphinx waves quart jug of bad milk.. 0123456789"}
+};
 
 class GLintPoint {
 public:
@@ -27,7 +41,7 @@ public:
 
 void myInit() {
    glClearColor(1.0, 1.0, 1.0, 1.0);      // background color = white
-   glColor3f(1.0, 0.0, 0.0);              // drawing color    = red
+   glColor3f(0.0, 0.0, 0.0);              // drawing color    = red
    glPointSize(1);                        // point size       = 4
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
@@ -42,14 +56,14 @@ void myReshape(int width, int height) {
    printf("width = %d; height=%d\n", width, height);
 }
 
-void drawCharacter(unsigned char c, fonts::Fnt_Ptr fnt, GLint x, GLint y) {
+void drawCharacter(unsigned char c, fonts::MonoSpacedFont_Ptr fnt, GLint x, GLint y) {
    fnt->ScanBitmap(c, [x, y](unsigned short row, unsigned short col, bool isSetPixel) {
       if (isSetPixel) {
          drawDot(x + col, y + row);
       }
    });
 }
-void drawString(const string &s, fonts::Fnt_Ptr fnt, GLint x, GLint y) {
+void drawString(const string &s, fonts::MonoSpacedFont_Ptr fnt, GLint x, GLint y) {
    unsigned short h = fnt->characterHeight();
    unsigned short w = fnt->characterWidth();
 
@@ -62,11 +76,10 @@ void myDisplay(void) {
    glClear(GL_COLOR_BUFFER_BIT);
 
    int y = 10;
-
-   drawString("The quick brown fox jumps over the lazy dog. 0123456789", fntPixelCarnage, 10, y);
-   drawString("Jackdaws love my big sphinx of quartz. 0123456789", fntFkp, 10, y += 20);
-   drawString("The five boxing wizards jump quickly. 0123456789", fntConsolas, 10, y += 20);
-
+   for (auto item : strings) {
+      drawString(item.second, item.first, 10, y);
+      y += item.first->characterHeight() * 2;
+   }
 
    glFlush();
 }

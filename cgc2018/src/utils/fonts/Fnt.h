@@ -1,16 +1,17 @@
+#pragma once
+
 // http://www.undocprint.org/formats/font_formats#microsoft_windows_r_font_formats
 // http://justsolve.archiveteam.org/wiki/FNT_(Windows_Font)
 // http://www.os2museum.com/files/docs/win10sdk/windows-1.03-sdk-prgref-1986.pdf
 
-#include <memory>
-#include <functional>
+
+
+
+#include "MonoSpacedFont.h"
 
 namespace fonts  {
 
-   class Fnt;
-   typedef std::shared_ptr<Fnt> Fnt_Ptr;
-
-   class Fnt
+   class Fnt: public MonoSpacedFont
    {
 #pragma pack(push, 1)
       struct FntHeader {
@@ -48,31 +49,23 @@ namespace fonts  {
       };
 #pragma pack(pop)
 
-      typedef std::function<void(unsigned short x, unsigned short y, bool is_set_pixel)> scanFntVisitor;
-
    public:
-      static Fnt_Ptr LoadFromFile(const char* file_name);
+      static MonoSpacedFont_Ptr LoadFromFile(const char* file_name);
       const char* name();
-      unsigned short characterWidth();
-      unsigned short characterHeight();
+      unsigned short characterWidth() override;
+      unsigned short characterHeight() override;
 
       bool DrawTerminal(unsigned char c, unsigned char border='X', unsigned char background='.');
-      bool ScanBitmap(unsigned char c, scanFntVisitor visitor);
+      bool ScanBitmap(unsigned char c, scanFontVisitor visitor) override;
       
-      ~Fnt() {
-         delete [] _file_content;
-      }
    private:
       Fnt(const char* file_content);
-      bool _scanBitmapWidth8(unsigned char c, scanFntVisitor visitor);      // for understanding format
-      bool _scanBitmapUniversal(unsigned char c, scanFntVisitor visitor);   // thanks: https://github.com/DisplayCore/FNT/blob/0b266707dd4ac14fd9f34ff9545a136ac0d0d861/FNT.cpp 
-
+      bool _scanBitmapWidth8(unsigned char c, scanFontVisitor visitor);      // for understanding format
+      bool _scanBitmapUniversal(unsigned char c, scanFontVisitor visitor);   // thanks: https://github.com/DisplayCore/FNT/blob/0b266707dd4ac14fd9f34ff9545a136ac0d0d861/FNT.cpp 
       
    private:
       FntHeader*  _header;
       const char* _font_table;
-
-      const char* _file_content;
    };
-   
+
 }

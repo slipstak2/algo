@@ -9,13 +9,15 @@
          xcopy /Y $(OutDir)*.exe                                  $(DstDir)*.exe         /I /F &amp;
          xcopy /Y $(Root)\3rd_part\freeglut\bin\freeglut.dll      $(DstDir)freeglut.dll* /I /F
          xcopy /Y $(Root)\fonts\*.*                               $(DstDir)fonts\*.*     /I /F
-         xcopy /Y $(Root)\data\*.*                                $(DstDir)data\*.*     /I /F
+         xcopy /Y $(Root)\fonts\fnt\*.*                           $(DstDir)fonts\fnt\*.* /I /F
+         xcopy /Y $(Root)\data\*.*                                $(DstDir)data\*.*      /I /F
       </Command>                                                                         
       <Command Condition="'$(Platform)'=='x64'">                                         
          xcopy /Y $(OutDir)*.exe                                  $(DstDir)*.exe         /I /F &amp;
          xcopy /Y $(Root)\3rd_part\freeglut\bin\x64\freeglut.dll  $(DstDir)freeglut.dll* /I /F
          xcopy /Y $(Root)\fonts\*.*                               $(DstDir)fonts\*.*     /I /F
-         xcopy /Y $(Root)\data\*.*                                $(DstDir)data\*.*     /I /F
+         xcopy /Y $(Root)\fonts\fnt\*.*                           $(DstDir)fonts\fnt\*.* /I /F
+         xcopy /Y $(Root)\data\*.*                                $(DstDir)data\*.*      /I /F
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

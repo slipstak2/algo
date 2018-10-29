@@ -20,12 +20,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="fonts\Fnt.cpp" />
+    <ClCompile Include="fonts\GSF.cpp" />
+    <ClCompile Include="fonts\MonoSpacedFont.cpp" />
     <ClCompile Include="geom\circle.cpp" />
     <ClCompile Include="geom\line.cpp" />
     <ClCompile Include="graphics\common.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fonts\Fnt.h" />
+    <ClInclude Include="fonts\GSF.h" />
+    <ClInclude Include="fonts\MonoSpacedFont.h" />
     <ClInclude Include="geom\circle.h" />
     <ClInclude Include="geom\line.h" />
     <ClInclude Include="geom\point.h" />

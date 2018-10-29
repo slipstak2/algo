@@ -1,30 +1,8 @@
 #include "Fnt.h"
-#include <iostream>
 
-char* LoadFileContent(const char* file_name) {
-   FILE* fp = fopen(file_name, "rb");
-   if (!fp) {
-      std::cerr << "Can't fopen file: '" << file_name << "'" << std::endl;
-      return nullptr;
-   }
-   fseek(fp, 0, SEEK_END);
-   long fsize = ftell(fp);
-   if (!fsize) {
-      std::cerr << "Empty file: '" << file_name << "'" << std::endl;
-      return nullptr;
-   }
-   fseek(fp, 0, SEEK_SET);
-   char* file_content = new char[fsize];
-   if (!fread(file_content, fsize, 1, fp)) {
-      std::cerr << "Error reading file" << std::endl;
-      return nullptr;
-   }
-   fclose(fp);
-   return file_content;
-}
 
 namespace fonts  {
-   Fnt_Ptr Fnt::LoadFromFile(const char* file_name) {
+   MonoSpacedFont_Ptr Fnt::LoadFromFile(const char* file_name) {
       char* fnt_file_content = LoadFileContent(file_name);
       if (!fnt_file_content) {
          return nullptr;
@@ -34,10 +12,10 @@ namespace fonts  {
          std::cerr << "class Fnt support only monospace font" << std::endl;
          return nullptr;
       }
-      return Fnt_Ptr(new Fnt(fnt_file_content));
+      return MonoSpacedFont_Ptr(new Fnt(fnt_file_content));
    }
 
-   Fnt::Fnt(const char* file_content) : _file_content(file_content) {
+   Fnt::Fnt(const char* file_content) : MonoSpacedFont(file_content) {
       _header = (FntHeader*)file_content;
       _font_table = &file_content[_header->dfBitsOffset];
    }
@@ -63,7 +41,7 @@ namespace fonts  {
       });
    }
 
-   bool Fnt::ScanBitmap(unsigned char c, scanFntVisitor visitor) {
+   bool Fnt::ScanBitmap(unsigned char c, scanFontVisitor visitor) {
       if (_header->dfPixWidth <= 8) {
          return _scanBitmapWidth8(c, visitor);
       } else {
@@ -71,7 +49,7 @@ namespace fonts  {
       }
    }
 
-   bool Fnt::_scanBitmapUniversal(unsigned char c, scanFntVisitor visitor) {
+   bool Fnt::_scanBitmapUniversal(unsigned char c, scanFontVisitor visitor) {
       if (_header->dfFirstChar <= c && c <= _header->dfLastChar) {
          unsigned short charH = _header->dfPixHeight;
          unsigned short charW = _header->dfPixWidth;
@@ -97,7 +75,7 @@ namespace fonts  {
       }
    }
 
-   bool Fnt::_scanBitmapWidth8(unsigned char c, scanFntVisitor visitor) {
+   bool Fnt::_scanBitmapWidth8(unsigned char c, scanFontVisitor visitor) {
       if (_header->dfFirstChar <= c && c <= _header->dfLastChar) {
          unsigned short charH = _header->dfPixHeight;
          unsigned short charW = _header->dfPixWidth;

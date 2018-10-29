@@ -24,6 +24,12 @@
     <ClCompile Include="geom\circle.cpp">
       <Filter>geom</Filter>
     </ClCompile>
+    <ClCompile Include="fonts\GSF.cpp">
+      <Filter>fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="fonts\MonoSpacedFont.cpp">
+      <Filter>fonts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fonts\Fnt.h">
@@ -40,6 +46,12 @@
     </ClInclude>
     <ClInclude Include="geom\circle.h">
       <Filter>geom</Filter>
+    </ClInclude>
+    <ClInclude Include="fonts\GSF.h">
+      <Filter>fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="fonts\MonoSpacedFont.h">
+      <Filter>fonts</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
