@@ -18,12 +18,12 @@ const int H = 600;
 
 float buffer[H][W];
 
-fonts::MonoSpacedFont_Ptr fntConsolas = fonts::Fnt::LoadFromFile("fonts/Consolas-20.fnt");
-fonts::MonoSpacedFont_Ptr fntFkp = fonts::Fnt::LoadFromFile("fonts/fkpmedium-16.fnt");
-fonts::MonoSpacedFont_Ptr fntPixelCarnage = fonts::Fnt::LoadFromFile("fonts/PixelCarnageMonospace-12.fnt");
+fonts::MonoSpacedFont_Ptr fntConsolas = fonts::Fnt::LoadFromFile("data/fonts/Consolas-20.fnt");
+fonts::MonoSpacedFont_Ptr fntFkp = fonts::Fnt::LoadFromFile("data/fonts/fkpmedium-16.fnt");
+fonts::MonoSpacedFont_Ptr fntPixelCarnage = fonts::Fnt::LoadFromFile("data/fonts/PixelCarnageMonospace-12.fnt");
 
-fonts::MonoSpacedFont_Ptr gsf08x08 = fonts::GSF::LoadFromFile("fonts/fnt/VGA2.GSF");
-fonts::MonoSpacedFont_Ptr gsfANK8X16 = fonts::GSF::LoadFromFile("fonts/fnt/ANK8X16.GSF");
+fonts::MonoSpacedFont_Ptr gsf08x08 = fonts::GSF::LoadFromFile("data/fonts/fnt/VGA2.GSF");
+fonts::MonoSpacedFont_Ptr gsfANK8X16 = fonts::GSF::LoadFromFile("data/fonts/fnt/ANK8X16.GSF");
 
 
 map<fonts::MonoSpacedFont_Ptr, string> strings = {
