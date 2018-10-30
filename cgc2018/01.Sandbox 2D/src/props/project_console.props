@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemDefinitionGroup>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <PostBuildEvent>
+      <Command Condition="'$(Platform)'=='Win32'">
+         xcopy /Y $(OutDir)$(TargetName).exe                      $(DstDir)$(TargetName).exe*   /I /F &amp;
+         xcopy /Y $(Root)\3rd_part\freeglut\bin\freeglut.dll      $(DstDir)freeglut.dll*        /I /F
+      </Command>                                                                         
+      <Command Condition="'$(Platform)'=='x64'">                                         
+         xcopy /Y $(OutDir)$(TargetName).exe                      $(DstDir)$(TargetName).exe*   /I /F &amp;
+         xcopy /Y $(Root)\3rd_part\freeglut\bin\x64\freeglut.dll  $(DstDir)freeglut.dll*        /I /F
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+</Project>
