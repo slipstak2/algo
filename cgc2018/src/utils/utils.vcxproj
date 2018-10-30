@@ -61,8 +61,8 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="PropertySheets">
     <Import Project="root.props" />
-    <Import Project="..\..\props\freeglut.props" />
-    <Import Project="..\..\props\project_common.props" />
+    <Import Project="..\props\freeglut.props" />
+    <Import Project="..\props\project_common.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />

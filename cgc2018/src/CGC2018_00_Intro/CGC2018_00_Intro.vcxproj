@@ -29,9 +29,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <ImportGroup Label="PropertySheets">
     <Import Project="root.props" />
-    <Import Project="..\..\props\freeglut.props" />
-    <Import Project="..\..\props\project_common.props" />
-    <Import Project="..\..\props\project_console.props" />
+    <Import Project="..\props\freeglut.props" />
+    <Import Project="..\props\project_common.props" />
+    <Import Project="..\props\project_console.props" />
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
