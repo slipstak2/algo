@@ -1,0 +1,10 @@
+!clean.bat
+   удаляет директории build и bin из текущего каталога
+   
+build-and-run.*.bat
+   1. собирает проект в конфигурации Release|x64 и выкладывает *.exe в bin/x64/Release со всем необходимым окружением
+      Для сборки необходима установленная VS2015 и переменная окружения VS140COMNTOOLS
+   2. запускает проект
+
+build-and-run.CGC2018_02_Color-Halftone.bat
+   Реализовано полутонирование алгоритмами "Ordered dither 8" и "Error diffusion: Floyd-Steinberg"
