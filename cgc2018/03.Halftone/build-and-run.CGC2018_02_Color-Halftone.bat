@@ -1,0 +1,2 @@
+"%VS140COMNTOOLS%..\IDE\devenv" src/cgc2018-03.sln /Rebuild "Release|x64" /Project src/CGC2018_02_Color-Halftone/CGC2018_02_Color-Halftone.vcxproj
+"bin/x64/Release/CGC2018_02_Color-Halftone-x64-Release.exe"
