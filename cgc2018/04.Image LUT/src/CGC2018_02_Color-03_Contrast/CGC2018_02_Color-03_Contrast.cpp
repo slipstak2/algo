@@ -77,12 +77,16 @@ int main(int argc, char* argv[]) {
 
    RGBpixelMap imageOriginal;
    imageOriginal.readBmpFile(imageFileName);
-
-   RGBpixelMap imageNegative = imageOriginal.toNegative();
-
-   images.push_back({&imageOriginal, "Original"});
-   images.push_back({&imageNegative, "Negative"});
+   int middleBrightness = imageOriginal.middleBrightness();
+   RGBpixelMap  imageIncContrast = imageOriginal.changeContrast(+200);
+   RGBpixelMap  imageDecContrast = imageOriginal.changeContrast(-200);
    
+   
+   images.push_back({&imageDecContrast, "Contrast -200"});
+   images.push_back({&imageOriginal, "Original"});
+   images.push_back({&imageIncContrast, "Contrast +200"});
+   
+
    glutInit(&argc, argv);
    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 
@@ -98,6 +102,7 @@ int main(int argc, char* argv[]) {
    glutMouseFunc(myMouse);
    glutKeyboardFunc(myKeyBoard);
    glutReshapeFunc(myReshape);
+
 
    glutDisplayFunc(myDisplay);
    glutMainLoop();

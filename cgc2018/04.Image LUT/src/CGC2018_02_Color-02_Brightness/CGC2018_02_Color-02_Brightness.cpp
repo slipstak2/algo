@@ -73,16 +73,16 @@ void myKeyBoard(unsigned char key, int x, int y) {
 using namespace std;
 int main(int argc, char* argv[]) {
 
-   const char* imageFileName = "data/koala.bmp";
+   const char* imageFileName = "data/cakes.bmp";
 
    RGBpixelMap imageOriginal;
    imageOriginal.readBmpFile(imageFileName);
-   RGBpixelMap  imageDecBrihtness = imageOriginal.changeBrihtness(-100);
-   RGBpixelMap  imageIncBrihtness = imageOriginal.changeBrihtness(+100);
+   RGBpixelMap  imageDecBrightness = imageOriginal.changeBrightness(-100);
+   RGBpixelMap  imageIncBrightness = imageOriginal.changeBrightness(+100);
    
-   images.push_back({&imageDecBrihtness, "brihtness -100"});
+   images.push_back({&imageDecBrightness, "brightness -100"});
    images.push_back({&imageOriginal, "Original"});
-   images.push_back({&imageIncBrihtness, "brihtness +100"});
+   images.push_back({&imageIncBrightness, "brightness +100"});
    
 
    glutInit(&argc, argv);

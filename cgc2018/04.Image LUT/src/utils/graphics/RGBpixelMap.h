@@ -46,8 +46,10 @@ public:
    RGBpixelMap toOrderedDither();
    RGBpixelMap toErrorDiffusion();
 
+   int         middleBrightness();
    RGBpixelMap toNegative();
-   RGBpixelMap changeBrihtness(int deltaBrihtness);
+   RGBpixelMap changeBrightness(int deltaBrightness);
+   RGBpixelMap changeContrast(int deltaContrast);
 
    friend void swap(RGBpixelMap& first, RGBpixelMap& second);
 

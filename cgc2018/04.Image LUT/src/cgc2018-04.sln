@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CGC2018_02_Color-02_Brightn
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CGC2018_02_Color-01_Negative", "CGC2018_02_Color-01_Negative\CGC2018_02_Color-01_Negative.vcxproj", "{2DA2351F-BDCC-40EF-A34D-D3C9A6043A36}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CGC2018_02_Color-03_Contrast", "CGC2018_02_Color-03_Contrast\CGC2018_02_Color-03_Contrast.vcxproj", "{50A29B36-0B78-4B4A-9F94-D7E9A5840306}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -41,6 +43,14 @@ Global
 		{2DA2351F-BDCC-40EF-A34D-D3C9A6043A36}.Release|Win32.Build.0 = Release|Win32
 		{2DA2351F-BDCC-40EF-A34D-D3C9A6043A36}.Release|x64.ActiveCfg = Release|x64
 		{2DA2351F-BDCC-40EF-A34D-D3C9A6043A36}.Release|x64.Build.0 = Release|x64
+		{50A29B36-0B78-4B4A-9F94-D7E9A5840306}.Debug|Win32.ActiveCfg = Debug|Win32
+		{50A29B36-0B78-4B4A-9F94-D7E9A5840306}.Debug|Win32.Build.0 = Debug|Win32
+		{50A29B36-0B78-4B4A-9F94-D7E9A5840306}.Debug|x64.ActiveCfg = Debug|x64
+		{50A29B36-0B78-4B4A-9F94-D7E9A5840306}.Debug|x64.Build.0 = Debug|x64
+		{50A29B36-0B78-4B4A-9F94-D7E9A5840306}.Release|Win32.ActiveCfg = Release|Win32
+		{50A29B36-0B78-4B4A-9F94-D7E9A5840306}.Release|Win32.Build.0 = Release|Win32
+		{50A29B36-0B78-4B4A-9F94-D7E9A5840306}.Release|x64.ActiveCfg = Release|x64
+		{50A29B36-0B78-4B4A-9F94-D7E9A5840306}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
