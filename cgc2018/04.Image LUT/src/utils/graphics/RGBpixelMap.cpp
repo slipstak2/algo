@@ -8,17 +8,6 @@
 
 using namespace std;
 
-RGB BLACK = {0, 0, 0};
-RGB WHITE = {255, 255, 255};
-
-bool operator == (const RGB& a, const RGB& b) {
-   return memcmp(&a, &b, sizeof(RGB)) == 0;
-}
-
-bool operator != (const RGB& a, const RGB& b) {
-   return !(a == b);
-}
-
 void swap(RGBpixelMap& a, RGBpixelMap& b) {
    swap(a.height, b.height);
    swap(a.width, b.width);
@@ -190,98 +179,17 @@ RGBpixelMap RGBpixelMap::toErrorDiffusion() {
    return  result;
 }
 
-int RGBpixelMap::middleBrightness() {
-   long long middleBrightnessRed = 0, middleBrightnessGreen = 0, middleBrightnessBlue = 0;
+RGBpixelMap RGBpixelMap::applyFilter(RGBLutFilterBase* filter) {
+   RGBpixelMap result(height, width);
    for (int y = 0; y < height; ++y) {
       for (int x = 0; x < width; ++x) {
          RGB pixel = getPixel(x,y);
-         middleBrightnessRed   += pixel.r;
-         middleBrightnessGreen += pixel.g;
-         middleBrightnessBlue  += pixel.b;
-      }
-   }
-   // 0.299 * r + 0.587 * g + 0.114 * b;
-   return ((middleBrightnessRed * 77 + middleBrightnessGreen * 150 + middleBrightnessBlue * 29) >> 8) / (width * height);
-}
-
-RGBpixelMap RGBpixelMap::toNegative() {
-   int LUT[256];
-   memset(LUT, 1, sizeof(LUT));
-   for (int i = 0; i <= 255; ++i) {
-      LUT[i] = 255 - i;
-   }
-
-   RGBpixelMap negative(height, width);
-   for (int y = 0; y < height; ++y) {
-      for (int x = 0; x < width; ++x) {
-         RGB oldPixel = getPixel(x,y);
-         RGB newPixel = { LUT[oldPixel.r], LUT[oldPixel.g], LUT[oldPixel.b] };
-         negative.setPixel(x, y, newPixel);
-      }
-   }
-   return negative;
-}
-
-// deltaBrightness in [0, 255]
-RGBpixelMap RGBpixelMap::changeBrightness(int deltaBrightness) {
-   int LUT[256];
-   memset(LUT, 0, sizeof(LUT));
-   for (int i = 0; i <= 255; ++i) {
-      LUT[i] = clamp(i + deltaBrightness, 0, 255);
-   }
-
-   RGBpixelMap result(height, width);
-   for (int y = 0; y < height; ++y) {
-      for (int x = 0; x < width; ++x) {
-         RGB oldPixel = getPixel(x,y);
-         RGB newPixel = { LUT[oldPixel.r], LUT[oldPixel.g], LUT[oldPixel.b] };
-         result.setPixel(x, y, newPixel);
+         filter->apply(pixel);
+         result.setPixel(x, y, pixel);
       }
    }
    return result;
 }
-
-// deltaContrast in [0, 255]
-RGBpixelMap RGBpixelMap::changeContrast(int deltaContrast) {
-   int LUT[256];
-   memset(LUT, 0, sizeof(LUT));
-   for (int i = 0; i <= 255; ++i) {
-      double contrast = deltaContrast;
-      double factor = (259 * (contrast + 255)) / (255 * (259 - contrast));
-      LUT[i] = clamp(factor * (i  - 128) + 128, 0, 255);
-    }
-
-   RGBpixelMap result(height, width);
-   for (int y = 0; y < height; ++y) {
-      for (int x = 0; x < width; ++x) {
-         RGB oldPixel = getPixel(x,y);
-         RGB newPixel = { LUT[oldPixel.r], LUT[oldPixel.g], LUT[oldPixel.b] };
-         result.setPixel(x, y, newPixel);
-      }
-   }
-   return result;
-}
-
-RGBpixelMap RGBpixelMap::gammaCorrection(double gamma) {
-   int LUT[256];
-   memset(LUT, 0, sizeof(LUT));
-   for (int i = 0; i <= 255; ++i) {
-      LUT[i] = 255 * pow(i / 255.0, 1 / gamma);
-   }
-
-
-   RGBpixelMap result(height, width);
-   for (int y = 0; y < height; ++y) {
-      for (int x = 0; x < width; ++x) {
-         RGB oldPixel = getPixel(x,y);
-         RGB newPixel = { LUT[oldPixel.r], LUT[oldPixel.g], LUT[oldPixel.b] };
-         result.setPixel(x, y, newPixel);
-      }
-   }
-   return result;
-}
-
-
 
 ushort getShort(fstream& inf)
 { //BMP format uses little-endian integer types

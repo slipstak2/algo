@@ -25,6 +25,8 @@
     <ClCompile Include="geom\circle.cpp" />
     <ClCompile Include="geom\line.cpp" />
     <ClCompile Include="graphics\common.cpp" />
+    <ClCompile Include="graphics\RGBLutFilter.cpp" />
+    <ClCompile Include="graphics\RGBpixel.cpp" />
     <ClCompile Include="graphics\RGBpixelMap.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -35,6 +37,8 @@
     <ClInclude Include="geom\line.h" />
     <ClInclude Include="geom\point.h" />
     <ClInclude Include="graphics\common.h" />
+    <ClInclude Include="graphics\RGBLutFilter.h" />
+    <ClInclude Include="graphics\RGBpixel.h" />
     <ClInclude Include="graphics\RGBpixelMap.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

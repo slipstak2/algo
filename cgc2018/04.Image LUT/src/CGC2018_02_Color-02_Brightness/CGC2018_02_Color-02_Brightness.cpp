@@ -77,8 +77,11 @@ int main(int argc, char* argv[]) {
 
    RGBpixelMap imageOriginal;
    imageOriginal.readBmpFile(imageFileName);
-   RGBpixelMap  imageDecBrightness = imageOriginal.changeBrightness(-100);
-   RGBpixelMap  imageIncBrightness = imageOriginal.changeBrightness(+100);
+
+   RGBLutFilterBrightness filterDecBrightness(-100);
+   RGBLutFilterBrightness filterIncBrightness(+100);
+   RGBpixelMap  imageDecBrightness = imageOriginal.applyFilter(&filterDecBrightness);
+   RGBpixelMap  imageIncBrightness = imageOriginal.applyFilter(&filterIncBrightness);
    
    images.push_back({&imageDecBrightness, "brightness -100"});
    images.push_back({&imageOriginal, "Original"});

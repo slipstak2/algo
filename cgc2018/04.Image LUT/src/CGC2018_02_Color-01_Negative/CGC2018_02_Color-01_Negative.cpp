@@ -77,8 +77,9 @@ int main(int argc, char* argv[]) {
 
    RGBpixelMap imageOriginal;
    imageOriginal.readBmpFile(imageFileName);
+   RGBLutFilterNegative filterNegative;
 
-   RGBpixelMap imageNegative = imageOriginal.toNegative();
+   RGBpixelMap imageNegative = imageOriginal.applyFilter(&filterNegative);
 
    images.push_back({&imageOriginal, "Original"});
    images.push_back({&imageNegative, "Negative"});

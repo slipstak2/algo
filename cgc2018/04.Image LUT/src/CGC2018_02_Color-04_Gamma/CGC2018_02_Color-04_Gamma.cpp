@@ -78,15 +78,16 @@ int main(int argc, char* argv[]) {
    RGBpixelMap imageOriginal;
    imageOriginal.readBmpFile(imageFileName);
 
-   RGBpixelMap  imageIncGamma = imageOriginal.gammaCorrection(2.2);
-   RGBpixelMap  imageDecGamma = imageOriginal.gammaCorrection(0.5);
-   
+   RGBLutFilterGammaCorrection filterIncGammaCorrection(2.2);
+   RGBLutFilterGammaCorrection filterDecGammaCorrection(0.5);
+
+   RGBpixelMap  imageIncGamma = imageOriginal.applyFilter(&filterIncGammaCorrection);
+   RGBpixelMap  imageDecGamma = imageOriginal.applyFilter(&filterDecGammaCorrection);
    
    images.push_back({&imageIncGamma, "Gamma correction: 2.2"});
    images.push_back({&imageOriginal, "Original"});
    images.push_back({&imageDecGamma, "Gamma correction: 0.5"});
    
-
    glutInit(&argc, argv);
    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 

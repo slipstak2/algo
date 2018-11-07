@@ -77,14 +77,16 @@ int main(int argc, char* argv[]) {
 
    RGBpixelMap imageOriginal;
    imageOriginal.readBmpFile(imageFileName);
-   int middleBrightness = imageOriginal.middleBrightness();
-   RGBpixelMap  imageIncContrast = imageOriginal.changeContrast(+200);
-   RGBpixelMap  imageDecContrast = imageOriginal.changeContrast(-200);
+
+   RGBLutFilterContrast filterDecContrast = RGBLutFilterContrast(-200);
+   RGBLutFilterContrast filterIncContrast = RGBLutFilterContrast(+200);
    
+   RGBpixelMap  imageDecContrast = imageOriginal.applyFilter(&filterDecContrast);
+   RGBpixelMap  imageIncContrast = imageOriginal.applyFilter(&filterIncContrast);
    
-   images.push_back({&imageDecContrast, "Contrast -200"});
+   images.push_back({&imageDecContrast, "Contrast: -200"});
    images.push_back({&imageOriginal, "Original"});
-   images.push_back({&imageIncContrast, "Contrast +200"});
+   images.push_back({&imageIncContrast, "Contrast: +200"});
    
 
    glutInit(&argc, argv);
