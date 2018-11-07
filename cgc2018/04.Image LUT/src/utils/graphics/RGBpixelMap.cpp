@@ -259,9 +259,29 @@ RGBpixelMap RGBpixelMap::changeContrast(int deltaContrast) {
          result.setPixel(x, y, newPixel);
       }
    }
-
    return result;
 }
+
+RGBpixelMap RGBpixelMap::gammaCorrection(double gamma) {
+   int LUT[256];
+   memset(LUT, 0, sizeof(LUT));
+   for (int i = 0; i <= 255; ++i) {
+      LUT[i] = 255 * pow(i / 255.0, 1 / gamma);
+   }
+
+
+   RGBpixelMap result(height, width);
+   for (int y = 0; y < height; ++y) {
+      for (int x = 0; x < width; ++x) {
+         RGB oldPixel = getPixel(x,y);
+         RGB newPixel = { LUT[oldPixel.r], LUT[oldPixel.g], LUT[oldPixel.b] };
+         result.setPixel(x, y, newPixel);
+      }
+   }
+   return result;
+}
+
+
 
 ushort getShort(fstream& inf)
 { //BMP format uses little-endian integer types

@@ -50,6 +50,7 @@ public:
    RGBpixelMap toNegative();
    RGBpixelMap changeBrightness(int deltaBrightness);
    RGBpixelMap changeContrast(int deltaContrast);
+   RGBpixelMap gammaCorrection(double gamma);
 
    friend void swap(RGBpixelMap& first, RGBpixelMap& second);
 
