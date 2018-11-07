@@ -15,9 +15,6 @@ struct RGB {
    bool isGray() {
       return r == g && g == b;
    }
-   RGB negative() {
-      return {ubyte(255 - r), ubyte(255 - g), ubyte(255 - b)};
-   }
 };
 
 extern RGB BLACK;
@@ -50,6 +47,7 @@ public:
    RGBpixelMap toErrorDiffusion();
 
    RGBpixelMap toNegative();
+   RGBpixelMap changeBrihtness(int deltaBrihtness);
 
    friend void swap(RGBpixelMap& first, RGBpixelMap& second);
 

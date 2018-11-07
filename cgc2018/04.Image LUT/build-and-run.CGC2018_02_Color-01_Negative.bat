@@ -1,0 +1,2 @@
+"%VS140COMNTOOLS%..\IDE\devenv" src/cgc2018-04.sln /Rebuild "Release|x64" /Project src/CGC2018_02_Color-01_Negative/CGC2018_02_Color-01_Negative.vcxproj
+"bin/x64/Release/CGC2018_02_Color-01_Negative-x64-Release.exe"

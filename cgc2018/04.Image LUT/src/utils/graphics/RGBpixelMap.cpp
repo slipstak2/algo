@@ -1,4 +1,6 @@
 #include "RGBpixelMap.h"
+#include "common.h"
+
 #include <fstream>
 #include <iostream>
 #include <cassert>
@@ -189,14 +191,39 @@ RGBpixelMap RGBpixelMap::toErrorDiffusion() {
 }
 
 RGBpixelMap RGBpixelMap::toNegative() {
+   int LUT[256];
+   memset(LUT, 1, sizeof(LUT));
+   for (int i = 0; i <= 255; ++i) {
+      LUT[i] = 255 - i;
+   }
+
    RGBpixelMap negative(height, width);
    for (int y = 0; y < height; ++y) {
       for (int x = 0; x < width; ++x) {
-         RGB pixel = getPixel(x,y);
-         negative.setPixel(x, y, pixel.negative());
+         RGB oldPixel = getPixel(x,y);
+         RGB newPixel = { LUT[oldPixel.r], LUT[oldPixel.g], LUT[oldPixel.b] };
+         negative.setPixel(x, y, newPixel);
       }
    }
    return negative;
+}
+
+RGBpixelMap RGBpixelMap::changeBrihtness(int deltaBrihtness) {
+   int LUT[256];
+   memset(LUT, 0, sizeof(LUT));
+   for (int i = 0; i <= 255; ++i) {
+      LUT[i] = clamp(i + deltaBrihtness, 0, 255);
+   }
+
+   RGBpixelMap result(height, width);
+   for (int y = 0; y < height; ++y) {
+      for (int x = 0; x < width; ++x) {
+         RGB oldPixel = getPixel(x,y);
+         RGB newPixel = { LUT[oldPixel.r], LUT[oldPixel.g], LUT[oldPixel.b] };
+         result.setPixel(x, y, newPixel);
+      }
+   }
+   return result;
 }
 
 ushort getShort(fstream& inf)
