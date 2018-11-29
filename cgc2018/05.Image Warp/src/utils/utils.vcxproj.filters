@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="fonts">
+      <UniqueIdentifier>{3a68f4f0-87ef-4603-919f-f876449c8117}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geom">
+      <UniqueIdentifier>{94c57e06-fb54-4e88-9a19-e0d69e610142}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics">
+      <UniqueIdentifier>{d370718c-2130-4d75-83f5-131fc75a4e2b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="fonts\Fnt.cpp">
+      <Filter>fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="geom\line.cpp">
+      <Filter>geom</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\common.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="geom\circle.cpp">
+      <Filter>geom</Filter>
+    </ClCompile>
+    <ClCompile Include="fonts\GSF.cpp">
+      <Filter>fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="fonts\MonoSpacedFont.cpp">
+      <Filter>fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\RGBpixelMap.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\RGBLutFilter.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\RGBpixel.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="fonts\Fnt.h">
+      <Filter>fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="geom\point.h">
+      <Filter>geom</Filter>
+    </ClInclude>
+    <ClInclude Include="geom\line.h">
+      <Filter>geom</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\common.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="geom\circle.h">
+      <Filter>geom</Filter>
+    </ClInclude>
+    <ClInclude Include="fonts\GSF.h">
+      <Filter>fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="fonts\MonoSpacedFont.h">
+      <Filter>fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\RGBpixelMap.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\RGBLutFilter.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\RGBpixel.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
