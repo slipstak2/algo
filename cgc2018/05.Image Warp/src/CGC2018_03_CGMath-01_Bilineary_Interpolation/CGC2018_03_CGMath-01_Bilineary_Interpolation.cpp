@@ -17,6 +17,8 @@ using namespace std;
 
 typedef unsigned char ubyte;
 
+const double pi = 2 * acos(0.0);
+
 int screenWidth;
 int screenHeight;
 
@@ -25,7 +27,10 @@ struct Image {
    string label;
 };
 
+RGBpixelMap imageOriginal;
+RGBpixelMap imageRotate;
 vector<Image> images;
+double alpha = 0;
 
 void myInit(const int W, const int H) {
    glClearColor(1.0, 1.0, 1.0, 1.0);
@@ -52,6 +57,8 @@ const int DX = 15;
 const int DY = 20;
 void myDisplay(void) {
    glClear(GL_COLOR_BUFFER_BIT);
+   imageRotate.drawImage(imageOriginal, alpha);
+   alpha += pi / 360;
  
    int dx = DX;
    for (auto &image : images) {
@@ -61,6 +68,7 @@ void myDisplay(void) {
 
    glutSwapBuffers();
    glFinish();
+   glutPostRedisplay();
 }
 
 void myKeyBoard(unsigned char key, int x, int y) {
@@ -75,13 +83,13 @@ int main(int argc, char* argv[]) {
 
    const char* imageFileName = "data/mandrill.bmp";
 
-   RGBpixelMap imageOriginal;
    imageOriginal.readBmpFile(imageFileName);
    if (imageOriginal.Width() != imageOriginal.Height()) {
       cerr << "Image must be square" << endl;
       return -1;
    }
-   RGBpixelMap imageRotate(imageOriginal.Height() * sqrt(2.0), imageOriginal.Width() * sqrt(2.0));
+   imageRotate =  RGBpixelMap(imageOriginal.Height() * sqrt(2.0), imageOriginal.Width() * sqrt(2.0));
+   
 
    images.push_back({&imageOriginal, "Original"});
    images.push_back({&imageRotate,   "Rotate"});

@@ -6,6 +6,8 @@
 #include <cassert>
 #include <vector>
 
+#include "math/point2.h"
+
 using namespace std;
 
 void swap(RGBpixelMap& a, RGBpixelMap& b) {
@@ -58,7 +60,7 @@ bool RGBpixelMap::setPixel(int x, int y, RGB color) {
    return false;
 }
 
-RGB  RGBpixelMap::getPixel(int x, int y) {
+RGB  RGBpixelMap::getPixel(int x, int y) const {
    if (0 <= x && x < width) {
       if ( 0 <= y && y < height)  {
          return pixels[width * y + x];
@@ -79,7 +81,7 @@ void RGBpixelMap::draw(int dx, int sreenHeight, const string& label) {
    }
 }
 
-int RGBpixelMap::Width() {
+int RGBpixelMap::Width() const {
    return width;
 }
 
@@ -91,7 +93,7 @@ bool RGBpixelMap::correctY(int y) {
    return 0 <= y && y < height;
 }
 
-int RGBpixelMap::Height() {
+int RGBpixelMap::Height() const {
    return height;
 }
 
@@ -189,6 +191,21 @@ RGBpixelMap RGBpixelMap::applyFilter(RGBLutFilterBase* filter) {
       }
    }
    return result;
+}
+void RGBpixelMap::drawImage(const RGBpixelMap& image, double alpha) {
+   
+   memset(pixels, -1, sizeof(RGB) * width * height);
+
+   int offsetX = (width - image.width) / 2;
+   int offsetY = (height - image.height) / 2;
+   for (int x = 0; x < image.width; ++x) {
+      for (int y = 0; y < image.height; ++y) {
+         Point2DI p1(x - image.width / 2, y - image.height / 2);
+         Point2DD p2 = Rotate(p1, alpha);
+         Point2DI p (p2.x + image.width / 2, p2.y + image.height / 2);
+         setPixel(offsetX + p.x, offsetX + p.y, image.getPixel(x, y));
+      }
+   }
 }
 
 ushort getShort(fstream& inf)

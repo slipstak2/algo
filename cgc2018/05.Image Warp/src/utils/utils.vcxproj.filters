@@ -10,6 +10,9 @@
     <Filter Include="graphics">
       <UniqueIdentifier>{d370718c-2130-4d75-83f5-131fc75a4e2b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="math">
+      <UniqueIdentifier>{9bcc2de9-2d1b-4c92-b10f-e88a5fd6ad42}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="fonts\Fnt.cpp">
@@ -30,13 +33,16 @@
     <ClCompile Include="fonts\MonoSpacedFont.cpp">
       <Filter>fonts</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\RGBpixelMap.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
     <ClCompile Include="graphics\RGBLutFilter.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
     <ClCompile Include="graphics\RGBpixel.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="math\point2.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\RGBpixelMap.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,13 +68,16 @@
     <ClInclude Include="fonts\MonoSpacedFont.h">
       <Filter>fonts</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\RGBpixelMap.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
     <ClInclude Include="graphics\RGBLutFilter.h">
       <Filter>graphics</Filter>
     </ClInclude>
     <ClInclude Include="graphics\RGBpixel.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="math\point2.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\RGBpixelMap.h">
       <Filter>graphics</Filter>
     </ClInclude>
   </ItemGroup>

@@ -28,6 +28,7 @@
     <ClCompile Include="graphics\RGBLutFilter.cpp" />
     <ClCompile Include="graphics\RGBpixel.cpp" />
     <ClCompile Include="graphics\RGBpixelMap.cpp" />
+    <ClCompile Include="math\point2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fonts\Fnt.h" />
@@ -40,6 +41,7 @@
     <ClInclude Include="graphics\RGBLutFilter.h" />
     <ClInclude Include="graphics\RGBpixel.h" />
     <ClInclude Include="graphics\RGBpixelMap.h" />
+    <ClInclude Include="math\point2.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <CharacterSet>Unicode</CharacterSet>
@@ -69,6 +71,7 @@
     <Import Project="root.props" />
     <Import Project="..\props\freeglut.props" />
     <Import Project="..\props\project_common.props" />
+    <Import Project="utils.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />

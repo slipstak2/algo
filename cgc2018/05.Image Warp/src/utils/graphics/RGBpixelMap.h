@@ -15,12 +15,12 @@ public:
    RGBpixelMap& operator = (RGBpixelMap other);
    ~RGBpixelMap();
    bool setPixel(int x, int y, RGB color);
-   RGB  getPixel(int x, int y);
+   RGB  getPixel(int x, int y) const;
    bool readBmpFile(const char* fname);
    void draw(int dx, int sreenHeight, const std::string& label);
 
-   int Width();
-   int Height();
+   int Width() const;
+   int Height() const;
 
    bool correctX(int x);
    bool correctY(int y);
@@ -30,6 +30,7 @@ public:
    RGBpixelMap toErrorDiffusion();
 
    RGBpixelMap applyFilter(RGBLutFilterBase* filter);
+   void drawImage(const RGBpixelMap& image, double alpha);
 
    friend void swap(RGBpixelMap& first, RGBpixelMap& second);
 
