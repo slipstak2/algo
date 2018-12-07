@@ -6,8 +6,6 @@
 #include <cassert>
 #include <vector>
 
-#include "math/point2.h"
-
 using namespace std;
 
 void swap(RGBpixelMap& a, RGBpixelMap& b) {
@@ -68,6 +66,35 @@ RGB  RGBpixelMap::getPixel(int x, int y) const {
    }
    cout << "MISS get" << endl;
    return {0, 0, 0};
+}
+
+bool RGBpixelMap::inside(const Point2DI& p) const {
+   if (0 <= p.x && p.x < width) {
+      if (0 <= p.y && p.y < height) {
+         return true;
+      }
+   }
+   return false;
+}
+RGB  RGBpixelMap::getPixelBilinearInter(const Point2DD& p) const {
+   Point2DI p1((int)(p.x),     (int)(p.y));
+   Point2DI p2((int)(p.x),     (int)(p.y + 1));
+   Point2DI p3((int)(p.x + 1), (int)(p.y + 1));
+   Point2DI p4((int)(p.x + 1), (int)(p.y));
+
+   if (inside(p1) && inside(p2) && inside(p3) && inside(p4)) {
+      RGBD color1 = getPixel(p1.x, p1.y);
+      RGBD color2 = getPixel(p2.x, p2.y);
+      RGBD color3 = getPixel(p3.x, p3.y);
+      RGBD color4 = getPixel(p4.x, p4.y);
+      
+      RGBD color5 = RGBD::linearInterpolation(color1, color2, p1.y, p.y, p2.y);
+      RGBD color6 = RGBD::linearInterpolation(color4, color3, p4.y, p.y, p3.y);
+      RGBD color7 = RGBD::linearInterpolation(color5, color6, p1.x, p.x, p4.x);
+      return color7.toRGB();
+   } else {
+      return getPixel(p.x, p.y);
+   }
 }
 
 void RGBpixelMap::draw(int dx, int sreenHeight, const string& label) {
@@ -192,21 +219,68 @@ RGBpixelMap RGBpixelMap::applyFilter(RGBLutFilterBase* filter) {
    }
    return result;
 }
+
+void RGBpixelMap::clear() {
+   memset(pixels, -1, sizeof(RGB) * width * height);
+}
 void RGBpixelMap::drawImage(const RGBpixelMap& image, double alpha) {
    
-   memset(pixels, -1, sizeof(RGB) * width * height);
-
+   clear();   
    int offsetX = (width - image.width) / 2;
    int offsetY = (height - image.height) / 2;
    for (int x = 0; x < image.width; ++x) {
       for (int y = 0; y < image.height; ++y) {
          Point2DI p1(x - image.width / 2, y - image.height / 2);
          Point2DD p2 = Rotate(p1, alpha);
-         Point2DI p (p2.x + image.width / 2, p2.y + image.height / 2);
+         Point2DI p (round(p2.x + image.width / 2.0), round(p2.y + image.height / 2.0));
          setPixel(offsetX + p.x, offsetX + p.y, image.getPixel(x, y));
       }
    }
 }
+
+void RGBpixelMap::drawImageNearestNeib(const RGBpixelMap& image, double alpha) {
+
+   clear();
+
+   int offsetX = (width - image.width) / 2;
+   int offsetY = (height - image.height) / 2;
+   
+   for (int x = 0; x < width; ++x) {
+      for (int y = 0; y < height; ++y) {
+         Point2DI p(x - width / 2, y - height / 2);
+         Point2DD p2 = ReverseRotate(p, alpha);
+         Point2DI p1(round(p2.x + image.width / 2.0), round(p2.y + image.height / 2.0));
+         if (0 <= p1.x && p1.x < image.width) {
+            if (0 <= p1.y && p1.y < image.height) {
+               setPixel(x, y, image.getPixel(p1.x, p1.y));
+            }
+         }
+      }
+   }
+}
+
+
+void RGBpixelMap::drawImageBilinearInter(const RGBpixelMap& image, double alpha) {
+
+   clear();
+
+   int offsetX = (width - image.width) / 2;
+   int offsetY = (height - image.height) / 2;
+
+   for (int x = 0; x < width; ++x) {
+      for (int y = 0; y < height; ++y) {
+         Point2DI p(x - width / 2, y - height / 2);
+         Point2DD p2 = ReverseRotate(p, alpha);
+         Point2DD p1(p2.x + image.width / 2.0, p2.y + image.height / 2.0);
+         if (0 <= p1.x && p1.x < image.width) {
+            if (0 <= p1.y && p1.y < image.height) {
+               setPixel(x, y, image.getPixelBilinearInter(p1));
+            }
+         }
+      }
+   }
+}
+
 
 ushort getShort(fstream& inf)
 { //BMP format uses little-endian integer types

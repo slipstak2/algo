@@ -1,3 +1,4 @@
+#pragma once 
 
 template<class T>
 class Point2{
@@ -20,3 +21,4 @@ typedef Point2<double> Point2DD;
 
 
 Point2DD Rotate(const Point2DI& p, double alpha);
+Point2DD ReverseRotate(const Point2DI& p, double alpha);

@@ -29,6 +29,9 @@ struct Image {
 
 RGBpixelMap imageOriginal;
 RGBpixelMap imageRotate;
+RGBpixelMap imageRotateNeib;
+RGBpixelMap imageRotateBilinearInter;
+
 vector<Image> images;
 double alpha = 0;
 
@@ -58,7 +61,9 @@ const int DY = 20;
 void myDisplay(void) {
    glClear(GL_COLOR_BUFFER_BIT);
    imageRotate.drawImage(imageOriginal, alpha);
-   alpha += pi / 360;
+   imageRotateNeib.drawImageNearestNeib(imageOriginal, alpha);
+   imageRotateBilinearInter.drawImageBilinearInter(imageOriginal, alpha);
+   alpha += pi / 1800;
  
    int dx = DX;
    for (auto &image : images) {
@@ -81,24 +86,32 @@ void myKeyBoard(unsigned char key, int x, int y) {
 using namespace std;
 int main(int argc, char* argv[]) {
 
-   const char* imageFileName = "data/mandrill.bmp";
+   const char* imageFileName = "data/mandrill300.bmp";
 
    imageOriginal.readBmpFile(imageFileName);
    if (imageOriginal.Width() != imageOriginal.Height()) {
       cerr << "Image must be square" << endl;
       return -1;
    }
-   imageRotate =  RGBpixelMap(imageOriginal.Height() * sqrt(2.0), imageOriginal.Width() * sqrt(2.0));
+   imageRotate              =  RGBpixelMap(imageOriginal.Height() * sqrt(2.0) + 4, imageOriginal.Width() * sqrt(2.0) + 4);
+   imageRotateNeib          =  RGBpixelMap(imageOriginal.Height() * sqrt(2.0) + 4, imageOriginal.Width() * sqrt(2.0) + 4);
+   imageRotateBilinearInter =  RGBpixelMap(imageOriginal.Height() * sqrt(2.0) + 4, imageOriginal.Width() * sqrt(2.0) + 4);
    
 
    images.push_back({&imageOriginal, "Original"});
-   images.push_back({&imageRotate,   "Rotate"});
+   images.push_back({&imageRotate,   "Transform: original -> rotate"});
+   images.push_back({&imageRotateNeib, "Nearest neighbor"});
+   images.push_back({&imageRotateBilinearInter, "Bilinear interpolation"});
    
    glutInit(&argc, argv);
    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 
-   const int W = imageOriginal.Width() * (1 + sqrt(2.0)) + 3 * DX;
-   const int H = imageOriginal.Height() * sqrt(2.0) + 2 * DY;
+   int W = DX * ((int)images.size() + 1);
+   int H = 2 * DY;
+   for (auto const &image: images) {
+      W += image.bitmap->Width();
+      H = max(H, 2 * DY + image.bitmap->Height());
+   }
    glutInitWindowSize(W, H);
    glutInitWindowPosition(100, 100);
 
