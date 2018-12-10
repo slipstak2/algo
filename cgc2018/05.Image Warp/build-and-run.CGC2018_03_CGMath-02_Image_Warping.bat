@@ -1,0 +1,2 @@
+"%VS140COMNTOOLS%..\IDE\devenv" src/cgc2018-05.sln /Rebuild "Release|x64" /Project src/CGC2018_03_CGMath-02_Image_Warping/CGC2018_03_CGMath-02_Image_Warping.vcxproj
+"bin/x64/Release/CGC2018_03_CGMath-02_Image_Warping-x64-Release.exe"

@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "utils", "utils\utils.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CGC2018_03_CGMath-01_Bilineary_Interpolation", "CGC2018_03_CGMath-01_Bilineary_Interpolation\CGC2018_03_CGMath-01_Bilineary_Interpolation.vcxproj", "{2DA2351F-BDCC-40EF-A34D-D3C9A6943A36}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CGC2018_03_CGMath-02_Image_Warping", "CGC2018_03_CGMath-02_Image_Warping\CGC2018_03_CGMath-02_Image_Warping.vcxproj", "{2DA2351F-BDCC-40EF-A85D-D3C9A6943A36}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -31,6 +33,14 @@ Global
 		{2DA2351F-BDCC-40EF-A34D-D3C9A6943A36}.Release|Win32.Build.0 = Release|Win32
 		{2DA2351F-BDCC-40EF-A34D-D3C9A6943A36}.Release|x64.ActiveCfg = Release|x64
 		{2DA2351F-BDCC-40EF-A34D-D3C9A6943A36}.Release|x64.Build.0 = Release|x64
+		{2DA2351F-BDCC-40EF-A85D-D3C9A6943A36}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2DA2351F-BDCC-40EF-A85D-D3C9A6943A36}.Debug|Win32.Build.0 = Debug|Win32
+		{2DA2351F-BDCC-40EF-A85D-D3C9A6943A36}.Debug|x64.ActiveCfg = Debug|x64
+		{2DA2351F-BDCC-40EF-A85D-D3C9A6943A36}.Debug|x64.Build.0 = Debug|x64
+		{2DA2351F-BDCC-40EF-A85D-D3C9A6943A36}.Release|Win32.ActiveCfg = Release|Win32
+		{2DA2351F-BDCC-40EF-A85D-D3C9A6943A36}.Release|Win32.Build.0 = Release|Win32
+		{2DA2351F-BDCC-40EF-A85D-D3C9A6943A36}.Release|x64.ActiveCfg = Release|x64
+		{2DA2351F-BDCC-40EF-A85D-D3C9A6943A36}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
