@@ -17,7 +17,7 @@ public:
    ~RGBpixelMap();
    bool setPixel(int x, int y, RGB color);
    RGB  getPixel(int x, int y) const;
-   RGB  getPixelBilinearInter(const Point2DD& p) const;
+   RGB  getPixelBilinearInter(const Point2D& p) const;
    bool readBmpFile(const char* fname);
    void draw(int dx, int sreenHeight, const std::string& label);
 
@@ -34,7 +34,7 @@ public:
    RGBpixelMap applyFilter(RGBLutFilterBase* filter);
 
    void clear();
-   bool inside(const Point2DI& p) const;
+   bool inside(const Point2I& p) const;
    void drawImage(const RGBpixelMap& image, double alpha);
    void drawImageNearestNeib(const RGBpixelMap& image, double alpha);
    void drawImageBilinearInter(const RGBpixelMap& image, double alpha);

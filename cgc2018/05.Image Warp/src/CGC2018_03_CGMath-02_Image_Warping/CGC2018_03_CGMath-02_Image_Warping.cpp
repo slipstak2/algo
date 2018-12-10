@@ -33,6 +33,7 @@ RGBpixelMap imageWarping;
 vector<Image> images;
 double alpha = 0;
 
+vector<Point2I> clickedPoint; 
 void myInit(const int W, const int H) {
    glClearColor(1.0, 1.0, 1.0, 1.0);
    glColor3f(0, 0, 0);

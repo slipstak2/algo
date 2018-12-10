@@ -16,9 +16,9 @@ public:
    T x, y;
 };
 
-typedef Point2<int> Point2DI;
-typedef Point2<double> Point2DD;
+typedef Point2<int> Point2I;
+typedef Point2<double> Point2D;
 
 
-Point2DD Rotate(const Point2DI& p, double alpha);
-Point2DD ReverseRotate(const Point2DI& p, double alpha);
+Point2D Rotate(const Point2I& p, double alpha);
+Point2D ReverseRotate(const Point2I& p, double alpha);

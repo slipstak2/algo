@@ -68,7 +68,7 @@ RGB  RGBpixelMap::getPixel(int x, int y) const {
    return {0, 0, 0};
 }
 
-bool RGBpixelMap::inside(const Point2DI& p) const {
+bool RGBpixelMap::inside(const Point2I& p) const {
    if (0 <= p.x && p.x < width) {
       if (0 <= p.y && p.y < height) {
          return true;
@@ -76,11 +76,11 @@ bool RGBpixelMap::inside(const Point2DI& p) const {
    }
    return false;
 }
-RGB  RGBpixelMap::getPixelBilinearInter(const Point2DD& p) const {
-   Point2DI p1((int)(p.x),     (int)(p.y));
-   Point2DI p2((int)(p.x),     (int)(p.y + 1));
-   Point2DI p3((int)(p.x + 1), (int)(p.y + 1));
-   Point2DI p4((int)(p.x + 1), (int)(p.y));
+RGB  RGBpixelMap::getPixelBilinearInter(const Point2D& p) const {
+   Point2I p1((int)(p.x),     (int)(p.y));
+   Point2I p2((int)(p.x),     (int)(p.y + 1));
+   Point2I p3((int)(p.x + 1), (int)(p.y + 1));
+   Point2I p4((int)(p.x + 1), (int)(p.y));
 
    if (inside(p1) && inside(p2) && inside(p3) && inside(p4)) {
       RGBD color1 = getPixel(p1.x, p1.y);
@@ -230,9 +230,9 @@ void RGBpixelMap::drawImage(const RGBpixelMap& image, double alpha) {
    int offsetY = (height - image.height) / 2;
    for (int x = 0; x < image.width; ++x) {
       for (int y = 0; y < image.height; ++y) {
-         Point2DI p1(x - image.width / 2, y - image.height / 2);
-         Point2DD p2 = Rotate(p1, alpha);
-         Point2DI p (round(p2.x + image.width / 2.0), round(p2.y + image.height / 2.0));
+         Point2I p1(x - image.width / 2, y - image.height / 2);
+         Point2D p2 = Rotate(p1, alpha);
+         Point2I p (round(p2.x + image.width / 2.0), round(p2.y + image.height / 2.0));
          setPixel(offsetX + p.x, offsetX + p.y, image.getPixel(x, y));
       }
    }
@@ -247,9 +247,9 @@ void RGBpixelMap::drawImageNearestNeib(const RGBpixelMap& image, double alpha) {
    
    for (int x = 0; x < width; ++x) {
       for (int y = 0; y < height; ++y) {
-         Point2DI p(x - width / 2, y - height / 2);
-         Point2DD p2 = ReverseRotate(p, alpha);
-         Point2DI p1(round(p2.x + image.width / 2.0), round(p2.y + image.height / 2.0));
+         Point2I p(x - width / 2, y - height / 2);
+         Point2D p2 = ReverseRotate(p, alpha);
+         Point2I p1(round(p2.x + image.width / 2.0), round(p2.y + image.height / 2.0));
          if (0 <= p1.x && p1.x < image.width) {
             if (0 <= p1.y && p1.y < image.height) {
                setPixel(x, y, image.getPixel(p1.x, p1.y));
@@ -269,9 +269,9 @@ void RGBpixelMap::drawImageBilinearInter(const RGBpixelMap& image, double alpha)
 
    for (int x = 0; x < width; ++x) {
       for (int y = 0; y < height; ++y) {
-         Point2DI p(x - width / 2, y - height / 2);
-         Point2DD p2 = ReverseRotate(p, alpha);
-         Point2DD p1(p2.x + image.width / 2.0, p2.y + image.height / 2.0);
+         Point2I p(x - width / 2, y - height / 2);
+         Point2D p2 = ReverseRotate(p, alpha);
+         Point2D p1(p2.x + image.width / 2.0, p2.y + image.height / 2.0);
          if (0 <= p1.x && p1.x < image.width) {
             if (0 <= p1.y && p1.y < image.height) {
                setPixel(x, y, image.getPixelBilinearInter(p1));

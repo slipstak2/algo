@@ -10,7 +10,7 @@ void tranform(double v[3], double M[3][3], double vR[3]) {
       }
    }
 }
-Point2DD Rotate(const Point2DI& p, double alpha) {
+Point2D Rotate(const Point2I& p, double alpha) {
 
    double v[3] = { (double)p.x, (double)p.y, 1 };
    double M[3][3] = {
@@ -22,10 +22,10 @@ Point2DD Rotate(const Point2DI& p, double alpha) {
    double vR[3] = { 0, 0, 0 };
 
    tranform(v, M, vR);
-   return Point2DD(vR[0], vR[1]);
+   return Point2D(vR[0], vR[1]);
 }
 
-Point2DD ReverseRotate(const Point2DI& p, double alpha) {
+Point2D ReverseRotate(const Point2I& p, double alpha) {
    double v[3] = { (double)p.x, (double)p.y, 1 };
    double a =  cos(alpha);
    double b = -sin(alpha);
@@ -50,5 +50,5 @@ Point2DD ReverseRotate(const Point2DI& p, double alpha) {
 
    double vR[3] = { 0, 0, 0 };
    tranform(v, MRT, vR);
-   return Point2DD(vR[0], vR[1]);
+   return Point2D(vR[0], vR[1]);
 }
