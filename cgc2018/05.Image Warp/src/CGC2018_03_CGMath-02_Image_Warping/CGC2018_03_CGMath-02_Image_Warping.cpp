@@ -13,12 +13,18 @@
 #include "graphics/common.h"
 #include "graphics/RGBpixelMap.h"
 
+#include "geom/circle.h"
+#include "graphics/common.h"
+
+
 using namespace std;
 
 typedef unsigned char ubyte;
 
 const double pi = 2 * acos(0.0);
 
+int W;
+int H;
 int screenWidth;
 int screenHeight;
 
@@ -33,7 +39,12 @@ RGBpixelMap imageWarping;
 vector<Image> images;
 double alpha = 0;
 
-vector<Point2I> clickedPoint; 
+const int DX = 15;
+const int DY = 20;
+
+
+vector<GLintPoint> gridPoints;
+
 void myInit(const int W, const int H) {
    glClearColor(1.0, 1.0, 1.0, 1.0);
    glColor3f(0, 0, 0);
@@ -45,8 +56,34 @@ void myInit(const int W, const int H) {
    gluOrtho2D(0, W, 0, H);
 }
 
+void getImageWarpingCoord(int mx, int my, int &x, int &y) {
+   int correctWarpingX = 2 * DX + imageOriginal.Width();
+   int correctWarpingY = DY;
+
+   x = mx - correctWarpingX;
+   y = (H - my)- correctWarpingY;
+}
 void myMouse(int button, int state, int mx, int my) {
+
+   if (button == GLUT_LEFT_BUTTON) {
+      if (state == GLUT_DOWN) {
+         int x, y;
+         getImageWarpingCoord(mx, my, x, y);
+         imageWarping.trySetClickPoint(x, y);
+         //gridPoints.push_back({x, y});
+      } else if (state == GLUT_UP) {
+         imageWarping.selectedPoint = -1;
+      }
+   }
    printf("button = %d; state = %d, x = %d; y = %d\n", button, state, mx, my);
+}
+
+void myMouseMove(int mx, int my) {
+   if(imageWarping.selectedPoint != -1) {
+      int x, y;
+      getImageWarpingCoord(mx, my, x, y);
+      imageWarping.gridPoints[imageWarping.selectedPoint] = GLintPoint(x, y);
+   }
 }
 
 void myReshape(int width, int height) {
@@ -55,8 +92,7 @@ void myReshape(int width, int height) {
    screenHeight = height;
 }
 
-const int DX = 15;
-const int DY = 20;
+
 void myDisplay(void) {
    glClear(GL_COLOR_BUFFER_BIT);
  
@@ -79,6 +115,41 @@ void myKeyBoard(unsigned char key, int x, int y) {
 }
 
 using namespace std;
+
+void initImageWarping(RGBpixelMap& image) {
+   image.isGridImage = true;
+   image.gridPixels = new RGB[image.Height() * image.Width()];
+   memset(image.gridPixels, 200, sizeof(RGB) * image.Height() * image.Width());
+
+   image.gridPoints = {
+      {   0,  512 }, // 0
+      { 256,  512 }, // 1
+      { 512,  512 }, // 2
+      {   0,  463 }, // 3
+      { 247,  448 }, // 4
+      { 512,  461 }, // 5
+      {   0,  169 }, // 6
+      { 169,  167 }, // 7
+      { 300,  170 }, // 8
+      { 512,  178 }, // 9
+      {   0,  118 }, // 10
+      { 153,  119 }, // 11
+      { 238,  134 }, // 12
+      { 330,  113 }, // 13
+      { 512,  114 }, // 14
+      { 237,   69 }, // 15
+      {   0,    0 }, // 16
+      { 243,    0 }, // 17
+      { 511,    0 }  // 18
+   };
+
+   image.gridTriangles.push_back({4, 7, 8});
+   image.gridTriangles.push_back({7, 8, 12});
+   image.gridTriangles.push_back({8, 12, 13});
+   image.gridTriangles.push_back({12, 13, 15});
+   image.gridTriangles.push_back({12, 15, 11});
+   image.gridTriangles.push_back({7, 12, 11});
+}
 int main(int argc, char* argv[]) {
 
    const char* imageFileName = "data/mandrill.bmp";
@@ -90,14 +161,16 @@ int main(int argc, char* argv[]) {
       return -1;
    }
 
+   initImageWarping(imageWarping);
+
    images.push_back({&imageOriginal, "Original"});
    images.push_back({&imageWarping,  "Image Warping"});
    
    glutInit(&argc, argv);
    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 
-   int W = DX * ((int)images.size() + 1);
-   int H = 2 * DY;
+   W = DX * ((int)images.size() + 1);
+   H = 2 * DY;
    for (auto const &image: images) {
       W += image.bitmap->Width();
       H = max(H, 2 * DY + image.bitmap->Height());
@@ -110,6 +183,7 @@ int main(int argc, char* argv[]) {
    myInit(W, H);
    
    glutMouseFunc(myMouse);
+   glutMotionFunc(myMouseMove);
    glutKeyboardFunc(myKeyBoard);
    glutReshapeFunc(myReshape);
 

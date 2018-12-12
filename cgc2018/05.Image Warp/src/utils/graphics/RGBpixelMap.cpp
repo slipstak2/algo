@@ -1,6 +1,9 @@
 #include "RGBpixelMap.h"
 #include "common.h"
 
+#include "geom/circle.h"
+#include "graphics/common.h"
+
 #include <fstream>
 #include <iostream>
 #include <cassert>
@@ -28,6 +31,7 @@ RGBpixelMap::RGBpixelMap(int height, int width)
    , width(width)
 {
    pixels = new RGB[height * width];
+   memset(pixels, 100, sizeof(RGB) * height * width);
 }
 
 RGBpixelMap::RGBpixelMap(const RGBpixelMap& other)
@@ -45,6 +49,7 @@ RGBpixelMap& RGBpixelMap::operator = (RGBpixelMap other) {
 
 RGBpixelMap::~RGBpixelMap() {
    delete[] pixels;
+   delete[] gridPixels;
 }
 
 bool RGBpixelMap::setPixel(int x, int y, RGB color) {
@@ -97,16 +102,67 @@ RGB  RGBpixelMap::getPixelBilinearInter(const Point2D& p) const {
    }
 }
 
+
+
+void drawGridPoint(const GLintPoint& p, int dx, int dy, bool isSelectedPoint) {
+   if (isSelectedPoint) {
+      glColor3f(255, 215, 0);
+   } else {
+      glColor3f(255, 0, 0);
+   }
+   glLineWidth(3);
+   glBegin(GL_LINE_LOOP);
+      glVertex2i(dx + p.x - 10, dy + p.y);
+      glVertex2i(dx + p.x,      dy + p.y - 10);
+      glVertex2i(dx + p.x + 10, dy + p.y);
+      glVertex2i(dx + p.x,      dy + p.y + 10);
+   glEnd();
+}
+
+void RGBpixelMap::trySetClickPoint(int x, int y) {
+   for (int i = 0; i < gridPoints.size(); ++i) {
+      if (gridPoints[i].dist(x, y) <= 10) {
+         selectedPoint = i;
+         break;
+      }
+   }
+}
+
+void RGBpixelMap::drawGridTriangle(const vector<int>& t, int dx, int dy) {
+   glColor3f(255, 255, 255);
+   glLineWidth(2);
+   glBegin(GL_LINE_LOOP);
+      glVertex2i(dx + gridPoints[t[0]].x, dy + gridPoints[t[0]].y);
+      glVertex2i(dx + gridPoints[t[1]].x, dy + gridPoints[t[1]].y);
+      glVertex2i(dx + gridPoints[t[2]].x, dy + gridPoints[t[2]].y);
+   glEnd();
+}
+
 void RGBpixelMap::draw(int dx, int sreenHeight, const string& label) {
    int dy = (sreenHeight - height) / 2;
    glRasterPos2i(dx, dy);
-   glDrawPixels(width, height, GL_RGB, GL_UNSIGNED_BYTE, pixels);
    
+   glDrawPixels(width, height, GL_RGB, GL_UNSIGNED_BYTE, isGridImage ? gridPixels : pixels);
+
+
+   for (int i = 0; i < gridPoints.size(); ++i) {
+      drawGridPoint(gridPoints[i], dx, dy, i == selectedPoint);
+   }
+
+   for (const vector<int>& t : gridTriangles) {
+      drawGridTriangle(t, dx, dy);
+   }
+
+   
+
+
+   glColor3f(0, 0, 0);
    glRasterPos2i(dx + 15, dy - 15);
    for (char c: label) {
       glutBitmapCharacter(GLUT_BITMAP_9_BY_15, c);
    }
 }
+
 
 int RGBpixelMap::Width() const {
    return width;

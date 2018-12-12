@@ -12,6 +12,9 @@ public:
       : x(x)
       , y(y)
    {}
+   double dist(GLint x2, GLint y2) {
+      return sqrt(double(x2 - x)*(x2 - x) + double(y2 - y)*(y2 - y));
+   }
 
 public:
    GLint x, y;

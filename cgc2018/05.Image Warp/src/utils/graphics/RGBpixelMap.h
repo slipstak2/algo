@@ -2,9 +2,11 @@
 
 #include <GL/glut.h>
 #include <string>
+#include <vector>
 
 #include "RGBLutFilter.h"
 #include "math/point2.h"
+#include "geom/point.h"
 
 typedef unsigned char ubyte;
 
@@ -19,7 +21,11 @@ public:
    RGB  getPixel(int x, int y) const;
    RGB  getPixelBilinearInter(const Point2D& p) const;
    bool readBmpFile(const char* fname);
+
    void draw(int dx, int sreenHeight, const std::string& label);
+   void drawGridTriangle(const std::vector<int>& t, int dx, int dy);
+
+   void trySetClickPoint(int x, int y);
 
    int Width() const;
    int Height() const;
@@ -40,6 +46,14 @@ public:
    void drawImageBilinearInter(const RGBpixelMap& image, double alpha);
 
    friend void swap(RGBpixelMap& first, RGBpixelMap& second);
+
+public:
+   bool isGridImage = false;
+   std::vector<GLintPoint>          gridPoints;
+   std::vector<std::vector<int>>    gridTriangles;
+   int selectedPoint = -1;
+   RGB* gridPixels = nullptr;
+
 
 private:
    RGB* pixels;
