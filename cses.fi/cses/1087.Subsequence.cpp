@@ -46,7 +46,7 @@ int get(const vi& a, int pos) {
    return a[pos];
 }
 
-string go(int pos) {
+void go(int pos) {
    string answer;
 
    while (pos != -1) {
@@ -54,7 +54,7 @@ string go(int pos) {
       pos = prvPos[pos][prvLetter[pos]];
    }
    reverse(answer.begin(), answer.end());
-   return answer;
+   cout << answer;
 }
 
 
@@ -80,13 +80,18 @@ int main() {
 
    s.insert(s.begin(), {A, C, G, T});
    dp.resize(s.size());
-   prvPos.resize(s.size(), vi(4, 0));
+   prvPos.resize(s.size(), vi(4));
    prvLetter.resize(s.size());
 
 
    prvPos[0] = {-1, -1, -1, -1};
 
    for (size_t i = 0; i < s.size(); ++i) {
+      if (i != 0) {
+         prvPos[i] = prvPos[i - 1];
+         prvPos[i][s[i-1]] = i - 1;
+      }
+
       lastPos[s[i]] = i;
       dp[i] = get(dp, prvPos[i][A]);
       prvLetter[i] = A;
@@ -102,27 +107,25 @@ int main() {
          prvLetter[i] = T;
       }
       dp[i]++;
-
-      if (i != s.size() - 1) {
-         prvPos[i + 1] = prvPos[i];
-         prvPos[i + 1][s[i]] = i;
-      }
    }
 
    auto cmpLen = [](const string &a, const string &b) {
       return a.size() < b.size();
    };
 
-   cout << 
-   min(
-      min(
-         go(lastPos[A]), go(lastPos[C]), cmpLen
-      ),
-      min(
-         go(lastPos[G]), go(lastPos[T]), cmpLen
-      ),
-      cmpLen
+   int resLen = min(
+      min(dp[lastPos[A]], dp[lastPos[C]]), 
+      min(dp[lastPos[G]], dp[lastPos[T]])
    );
 
+   if (resLen == dp[lastPos[A]]) {
+      go(lastPos[A]);
+   } else if (resLen == dp[lastPos[C]]) {
+      go(lastPos[C]);
+   } else if (resLen == dp[lastPos[G]]) {
+      go(lastPos[G]);
+   } else if (resLen == dp[lastPos[T]]) {
+      go(lastPos[T]);
+   }
    return 0;
 }
