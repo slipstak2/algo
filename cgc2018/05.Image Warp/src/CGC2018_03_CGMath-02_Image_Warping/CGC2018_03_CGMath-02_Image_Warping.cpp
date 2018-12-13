@@ -82,14 +82,26 @@ void myMouse(int button, int state, int mx, int my) {
 int prvDrawX = 0, prvDrawY = 0;
 void myMouseMove(int mx, int my) {
    if(imageWarping.selectedPoint != -1) {
-      int x, y;
-      getImageWarpingCoord(mx, my, x, y);
-      imageWarping.gridPoints[imageWarping.selectedPoint] = GLintPoint(x, y);
-      if (abs(prvDrawX - mx) + abs(prvDrawY - my) >= 5) {
-         imageWarping.drawTriangles(false);
-         prvDrawX = mx;
-         prvDrawY = my;
-      }     
+      if (imageWarping.cornerPoints.find(imageWarping.selectedPoint) == imageWarping.cornerPoints.end()) {
+         int x, y;
+         getImageWarpingCoord(mx, my, x, y);
+
+         if (x < 0) x = 0; if (x >= imageWarping.Width())   x = imageWarping.Width() - 1;
+         if (y < 0) y = 0; if (y >= imageWarping.Height())  y = imageWarping.Height() - 1;
+
+         if (imageWarping.bottomPoints.find(imageWarping.selectedPoint) != imageWarping.bottomPoints.end()) y = 0;
+         if (imageWarping.topPoints.find(imageWarping.selectedPoint) != imageWarping.topPoints.end()) y = imageWarping.Height() - 1;
+         if (imageWarping.leftPoints.find(imageWarping.selectedPoint) != imageWarping.leftPoints.end()) x = 0;
+         if (imageWarping.rightPoints.find(imageWarping.selectedPoint) != imageWarping.rightPoints.end()) x = imageWarping.Width() - 1;
+
+
+         imageWarping.gridPoints[imageWarping.selectedPoint] = GLintPoint(x, y);
+         if (abs(prvDrawX - mx) + abs(prvDrawY - my) >= 5) {
+            imageWarping.drawTriangles(false);
+            prvDrawX = mx;
+            prvDrawY = my;
+         }
+      }
    }
 }
 
@@ -158,6 +170,40 @@ void initImageWarping(RGBpixelMap& image) {
    image.gridTriangles.push_back({12, 13, 15});
    image.gridTriangles.push_back({12, 15, 11});
    image.gridTriangles.push_back({7, 12, 11});
+
+   image.gridTriangles.push_back({3, 4, 7});
+   image.gridTriangles.push_back({3, 6, 7});
+   image.gridTriangles.push_back({0, 1, 3});
+   image.gridTriangles.push_back({4, 1, 3});
+   image.gridTriangles.push_back({1, 2, 5});
+   image.gridTriangles.push_back({1, 4, 5});
+   image.gridTriangles.push_back({4, 5, 8});
+   image.gridTriangles.push_back({9, 5, 8});
+   image.gridTriangles.push_back({13, 8, 9});
+   image.gridTriangles.push_back({13, 14, 9});
+   image.gridTriangles.push_back({6, 7, 11});
+   image.gridTriangles.push_back({6, 10, 11});
+   image.gridTriangles.push_back({10, 16, 17});
+   image.gridTriangles.push_back({17, 18, 14});
+   image.gridTriangles.push_back({10, 11, 17});
+   image.gridTriangles.push_back({15, 11, 17});
+   image.gridTriangles.push_back({13, 14, 17});
+   image.gridTriangles.push_back({15, 13, 17});
+
+   image.topPoints.insert(1);
+   image.bottomPoints.insert(17);
+   image.leftPoints.insert(3);
+   image.leftPoints.insert(6);
+   image.leftPoints.insert(10);
+   image.rightPoints.insert(5);
+   image.rightPoints.insert(9);
+   image.rightPoints.insert(14);
+
+   image.cornerPoints.insert(0);
+   image.cornerPoints.insert(2);
+   image.cornerPoints.insert(16);
+   image.cornerPoints.insert(18);
+
 
    for (int i = 0; i < image.gridTriangles.size(); ++i) {
       image.drawTriangle(i);

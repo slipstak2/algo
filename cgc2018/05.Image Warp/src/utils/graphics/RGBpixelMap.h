@@ -3,6 +3,7 @@
 #include <GL/glut.h>
 #include <string>
 #include <vector>
+#include <set>
 
 #include "RGBLutFilter.h"
 #include "math/point2.h"
@@ -55,6 +56,13 @@ public:
    std::vector<GLintPoint>          gridPoints;
    std::vector<GLintPoint>          gridInitPoints;
    std::vector<std::vector<int>>    gridTriangles;
+
+   std::set<int> bottomPoints;
+   std::set<int> topPoints;
+   std::set<int> leftPoints;
+   std::set<int> rightPoints;
+   std::set<int> cornerPoints;
+
    int selectedPoint = -1;
    RGB* gridPixels = nullptr;
 
