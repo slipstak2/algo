@@ -10,6 +10,8 @@
 #include <cassert>
 #include <vector>
 
+#define DRAW_TRIANGLES
+
 using namespace std;
 
 void swap(RGBpixelMap& a, RGBpixelMap& b) {
@@ -166,9 +168,11 @@ void RGBpixelMap::draw(int dx, int sreenHeight, const string& label) {
       drawGridPoint(gridPoints[i], dx, dy, i == selectedPoint);
    }
 
+#if defined(DRAW_TRIANGLES)
    for (const vector<int>& t : gridTriangles) {
       drawGridTriangle(t, dx, dy);
    }
+#endif
 
    glColor3f(0, 0, 0);
    glRasterPos2i(dx + 15, dy - 15);
