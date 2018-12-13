@@ -45,6 +45,9 @@
     <ClCompile Include="graphics\RGBpixelMap.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
+    <ClCompile Include="geom\point.cpp">
+      <Filter>geom</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fonts\Fnt.h">

@@ -24,6 +24,8 @@ public:
 
    void draw(int dx, int sreenHeight, const std::string& label);
    void drawGridTriangle(const std::vector<int>& t, int dx, int dy);
+   void drawTriangle(int tNum, bool isBilinearInterpolation = false);
+   void drawTriangles(bool isBilinearInterpolation = false);
 
    void trySetClickPoint(int x, int y);
 
@@ -41,6 +43,7 @@ public:
 
    void clear();
    bool inside(const Point2I& p) const;
+   bool insideTriangle(int tNum, int x, int y) const;
    void drawImage(const RGBpixelMap& image, double alpha);
    void drawImageNearestNeib(const RGBpixelMap& image, double alpha);
    void drawImageBilinearInter(const RGBpixelMap& image, double alpha);
@@ -50,6 +53,7 @@ public:
 public:
    bool isGridImage = false;
    std::vector<GLintPoint>          gridPoints;
+   std::vector<GLintPoint>          gridInitPoints;
    std::vector<std::vector<int>>    gridTriangles;
    int selectedPoint = -1;
    RGB* gridPixels = nullptr;

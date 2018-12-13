@@ -72,17 +72,24 @@ void myMouse(int button, int state, int mx, int my) {
          imageWarping.trySetClickPoint(x, y);
          //gridPoints.push_back({x, y});
       } else if (state == GLUT_UP) {
+         imageWarping.drawTriangles(true);
          imageWarping.selectedPoint = -1;
       }
    }
    printf("button = %d; state = %d, x = %d; y = %d\n", button, state, mx, my);
 }
 
+int prvDrawX = 0, prvDrawY = 0;
 void myMouseMove(int mx, int my) {
    if(imageWarping.selectedPoint != -1) {
       int x, y;
       getImageWarpingCoord(mx, my, x, y);
       imageWarping.gridPoints[imageWarping.selectedPoint] = GLintPoint(x, y);
+      if (abs(prvDrawX - mx) + abs(prvDrawY - my) >= 5) {
+         imageWarping.drawTriangles(false);
+         prvDrawX = mx;
+         prvDrawY = my;
+      }     
    }
 }
 
@@ -121,7 +128,7 @@ void initImageWarping(RGBpixelMap& image) {
    image.gridPixels = new RGB[image.Height() * image.Width()];
    memset(image.gridPixels, 200, sizeof(RGB) * image.Height() * image.Width());
 
-   image.gridPoints = {
+   image.gridInitPoints   = {
       {   0,  512 }, // 0
       { 256,  512 }, // 1
       { 512,  512 }, // 2
@@ -143,12 +150,18 @@ void initImageWarping(RGBpixelMap& image) {
       { 511,    0 }  // 18
    };
 
+   image.gridPoints = image.gridInitPoints;
+
    image.gridTriangles.push_back({4, 7, 8});
    image.gridTriangles.push_back({7, 8, 12});
    image.gridTriangles.push_back({8, 12, 13});
    image.gridTriangles.push_back({12, 13, 15});
    image.gridTriangles.push_back({12, 15, 11});
    image.gridTriangles.push_back({7, 12, 11});
+
+   for (int i = 0; i < image.gridTriangles.size(); ++i) {
+      image.drawTriangle(i);
+   }
 }
 int main(int argc, char* argv[]) {
 

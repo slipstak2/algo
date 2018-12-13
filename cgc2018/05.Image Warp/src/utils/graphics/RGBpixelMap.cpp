@@ -3,6 +3,7 @@
 
 #include "geom/circle.h"
 #include "graphics/common.h"
+#include "math/point2.h"
 
 #include <fstream>
 #include <iostream>
@@ -55,7 +56,11 @@ RGBpixelMap::~RGBpixelMap() {
 bool RGBpixelMap::setPixel(int x, int y, RGB color) {
    if (0 <= x && x < width) {
       if ( 0 <= y && y < height)  {
-         pixels[width * y + x] = color;
+         if (isGridImage) {
+            gridPixels[width * y + x] = color;
+         } else {
+            pixels[width * y + x] = color;
+         }
          return true;
       }
    }
@@ -80,6 +85,19 @@ bool RGBpixelMap::inside(const Point2I& p) const {
       }
    }
    return false;
+}
+
+bool RGBpixelMap::insideTriangle(int tNum, int x, int y) const {
+   int pos = 0, neg = 0;
+   for (int i = 0; i < 3; ++i) {
+      GLintPoint v1 = toVector(x, y, gridPoints[gridTriangles[tNum][i]]);
+      GLintPoint v2 = toVector(x, y, gridPoints[gridTriangles[tNum][(i + 1) % 3]]);
+      long long mulV = mulVect(v1, v2);
+      if (mulV <= 0) pos++;
+      if (mulV >= 0) neg++;
+   }
+
+   return (pos == 3 || neg == 3);
 }
 RGB  RGBpixelMap::getPixelBilinearInter(const Point2D& p) const {
    Point2I p1((int)(p.x),     (int)(p.y));
@@ -144,7 +162,6 @@ void RGBpixelMap::draw(int dx, int sreenHeight, const string& label) {
    
    glDrawPixels(width, height, GL_RGB, GL_UNSIGNED_BYTE, isGridImage ? gridPixels : pixels);
 
-
    for (int i = 0; i < gridPoints.size(); ++i) {
       drawGridPoint(gridPoints[i], dx, dy, i == selectedPoint);
    }
@@ -153,9 +170,6 @@ void RGBpixelMap::draw(int dx, int sreenHeight, const string& label) {
       drawGridTriangle(t, dx, dy);
    }
 
-   
-
-
    glColor3f(0, 0, 0);
    glRasterPos2i(dx + 15, dy - 15);
    for (char c: label) {
@@ -163,6 +177,50 @@ void RGBpixelMap::draw(int dx, int sreenHeight, const string& label) {
    }
 }
 
+void RGBpixelMap::drawTriangle(int tNum, bool isBilinearInterpolation){
+   int x0 = gridInitPoints[gridTriangles[tNum][0]].x;
+   int y0 = gridInitPoints[gridTriangles[tNum][0]].y;
+   int x1 = gridInitPoints[gridTriangles[tNum][1]].x;
+   int y1 = gridInitPoints[gridTriangles[tNum][1]].y;
+   int x2 = gridInitPoints[gridTriangles[tNum][2]].x;
+   int y2 = gridInitPoints[gridTriangles[tNum][2]].y;
+
+   int x0_ = gridPoints[gridTriangles[tNum][0]].x;
+   int y0_ = gridPoints[gridTriangles[tNum][0]].y;
+   int x1_ = gridPoints[gridTriangles[tNum][1]].x;
+   int y1_ = gridPoints[gridTriangles[tNum][1]].y;
+   int x2_ = gridPoints[gridTriangles[tNum][2]].x;
+   int y2_ = gridPoints[gridTriangles[tNum][2]].y;
+   
+   double T[3][3];
+   getTransfromCoord(
+      x0,  y0,  x1,  y1,  x2,  y2,
+      x0_, y0_, x1_, y1_, x2_, y2_,
+      T);
+   
+   for (int y = 0; y < height; ++y) {
+      for (int x = 0; x < width; ++x) {
+         if (insideTriangle(tNum, x, y)) {
+            Point2D p = TransformPoint(Point2I(x, y), T);
+            if (isBilinearInterpolation) {
+               setPixel(x, y, getPixelBilinearInter(p));
+            } else {
+               setPixel(x, y, getPixel(p.x, p.y));
+            }
+         }
+      }
+   }
+}
+
+
+void RGBpixelMap::drawTriangles(bool isBilinearInterpolation) {
+   for (int i = 0; i < gridTriangles.size(); ++i) {
+      vector<int>& t = gridTriangles[i];
+      if (std::find(t.begin(), t.end(), selectedPoint) != t.end()) {
+         drawTriangle(i, isBilinearInterpolation);
+      }
+   }
+}
 
 int RGBpixelMap::Width() const {
    return width;

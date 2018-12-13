@@ -24,6 +24,7 @@
     <ClCompile Include="fonts\MonoSpacedFont.cpp" />
     <ClCompile Include="geom\circle.cpp" />
     <ClCompile Include="geom\line.cpp" />
+    <ClCompile Include="geom\point.cpp" />
     <ClCompile Include="graphics\common.cpp" />
     <ClCompile Include="graphics\RGBLutFilter.cpp" />
     <ClCompile Include="graphics\RGBpixel.cpp" />

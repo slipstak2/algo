@@ -12,14 +12,17 @@ public:
       : x(x)
       , y(y)
    {}
-   double dist(GLint x2, GLint y2) {
-      return sqrt(double(x2 - x)*(x2 - x) + double(y2 - y)*(y2 - y));
-   }
+   double dist(GLint x2, GLint y2);
 
 public:
    GLint x, y;
 };
 
+GLintPoint toVector(int begX, int begY, int endX, int endY);
+
+GLintPoint toVector(int begX, int begY, const GLintPoint& pEnd);
+
+long long mulVect(const GLintPoint& v1, const GLintPoint& v2);
 
 class GLfloatPoint {
 public:
