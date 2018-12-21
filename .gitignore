@@ -17,6 +17,7 @@ output.txt
 *.ipch
 *.db-shm
 *.db-wal
+*.user
 /codeforces/*/*.filters
 /codeforces/*/*.vcxproj
 /codeforces/*.sln
@@ -29,3 +30,9 @@ output.txt
 /shen/2. Порождение комбинаторных объектов/2.1. Размещение с повторениями/2.1.Размещения с повторениями.filters
 /shen/2. Порождение комбинаторных объектов/2.1. Размещение с повторениями/2.1.Размещения с повторениями.vcxproj
 /shen/*.sln
+/informatics.mccme.ru/informatics.mccme.ru.sln
+/informatics.mccme.ru/informatics.mccme.ru/informatics.mccme.ru.vcxproj
+/informatics.mccme.ru/informatics.mccme.ru/informatics.mccme.ru.vcxproj.filters
+/hackerrank/DataStructures/DataStructures/DataStructures.sln
+/hackerrank/DataStructures/DataStructures/DataStructures/DataStructures.vcxproj
+/hackerrank/DataStructures/DataStructures/DataStructures/DataStructures.vcxproj.filters
