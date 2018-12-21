@@ -10,6 +10,7 @@
 #include <cassert>
 #include <vector>
 
+#define DRAW_GRID_POINTS
 #define DRAW_TRIANGLES
 
 using namespace std;
@@ -164,9 +165,11 @@ void RGBpixelMap::draw(int dx, int sreenHeight, const string& label) {
    
    glDrawPixels(width, height, GL_RGB, GL_UNSIGNED_BYTE, isGridImage ? gridPixels : pixels);
 
+#if defined(DRAW_GRID_POINTS)
    for (int i = 0; i < gridPoints.size(); ++i) {
       drawGridPoint(gridPoints[i], dx, dy, i == selectedPoint);
    }
+#endif
 
 #if defined(DRAW_TRIANGLES)
    for (const vector<int>& t : gridTriangles) {
