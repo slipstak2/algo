@@ -146,7 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="div.cpp" />
+    <ClCompile Include="max_element.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="output.txt" />

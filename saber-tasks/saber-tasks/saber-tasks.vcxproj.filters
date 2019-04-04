@@ -23,7 +23,7 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="div.cpp">
+    <ClCompile Include="max_element.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
