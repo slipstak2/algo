@@ -146,7 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="max_element.cpp" />
+    <ClCompile Include="rnd7.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="output.txt" />
