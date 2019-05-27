@@ -146,11 +146,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="rnd7.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="output.txt" />
     <Text Include="output1000.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="8-battery.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
