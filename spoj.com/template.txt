@@ -1,17 +1,12 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <set>
-#include <map>
-#include <cmath>
-#include <queue>
-#include <chrono>
 #include <vector>
 #include <string>
-#include <cstring>
 #include <iostream>
 #include <algorithm>
- 
- using namespace std;
+
+using namespace std;
 
 typedef long long ll;
 

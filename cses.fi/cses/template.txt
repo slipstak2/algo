@@ -2,6 +2,7 @@
 
 #include <set>
 #include <vector>
+#include <stack>
 #include <string>
 #include <cstring>
 #include <iostream>
